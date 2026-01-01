@@ -514,35 +514,6 @@
         .hint-box.show {
             display: block;
         }
-
-        /* Add this to your existing CSS */
-        .input-group {
-            background-color: var(--gray-100);
-            padding: 1.5rem;
-            border-radius: 0.75rem;
-            margin: 1rem 0;
-            border-left: 4px solid var(--blue);
-        }
-        
-        body.dark-mode .input-group {
-            background-color: #2d3748;
-        }
-        
-        .result-container {
-            background-color: #f0f9ff;
-            padding: 1.5rem;
-            border-radius: 0.75rem;
-            border-left: 4px solid var(--green);
-            animation: fadeIn 0.5s ease;
-        }
-        
-        body.dark-mode .result-container {
-            background-color: #1e3a8a;
-        }
-        
-        .math-display {
-            transition: all 0.3s ease;
-        }
         
         /* Applications Grid */
         .applications-grid {
@@ -1883,7 +1854,7 @@
                 <p class="page-subtitle">Real-world use cases in electrical and mechanical engineering</p>
             </div>
             
-            <!-- RLC Circuits Application - INTERACTIVE -->
+            <!-- RLC Circuits Application -->
             <div class="card">
                 <h2 class="card-title">RLC Electrical Circuits</h2>
                 
@@ -1914,46 +1885,10 @@
                         <li>\( V \) = voltage source (Volts)</li>
                     </ul>
                     
-                    <h4 class="mt-4">Interactive RLC Circuit Solver</h4>
-                    
-                    <div class="input-group mt-4">
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
-                            <div>
-                                <label for="resistance" class="form-label">Resistance \(R\) (Ω)</label>
-                                <input type="number" id="resistance" class="form-input" step="0.1" min="0" value="10">
-                            </div>
-                            <div>
-                                <label for="inductance" class="form-label">Inductance \(L\) (H)</label>
-                                <input type="number" id="inductance" class="form-input" step="0.01" min="0.01" value="1">
-                            </div>
-                            <div>
-                                <label for="capacitance" class="form-label">Capacitance \(C\) (F)</label>
-                                <input type="number" id="capacitance" class="form-input" step="0.001" min="0.001" value="0.01">
-                            </div>
-                        </div>
-                        
-                        <button class="submit-btn" id="calculateRLC" style="margin-top: 1rem;">Calculate Circuit Response</button>
-                    </div>
-                    
-                    <div class="result-container mt-4" id="rlcResult" style="display: none;">
-                        <h4 class="mb-2" style="color: var(--green);">Circuit Analysis Results:</h4>
-                        
-                        <div class="math-display" id="discriminantResult">
-                            <!-- Calculated discriminant will appear here -->
-                        </div>
-                        
-                        <div class="math-display mt-2" id="dampingState">
-                            <!-- Damping state will appear here -->
-                        </div>
-                        
-                        <div class="math-display mt-2" id="characteristicRoots">
-                            <!-- Characteristic roots will appear here -->
-                        </div>
-                        
-                        <div class="math-display mt-2" id="currentEquation">
-                            <!-- Current equation will appear here -->
-                        </div>
-                    </div>
+                    <h4 class="mt-4">Solution Approach:</h4>
+                    <p>1. Solve the homogeneous equation for natural response</p>
+                    <p>2. Find particular solution for forced response (if \( V(t) \neq 0 \))</p>
+                    <p>3. Apply initial conditions: \( i(0) \) and \( i'(0) \)</p>
                     
                     <h4 class="mt-4">Damping Cases:</h4>
                     <div class="root-analysis-grid">
@@ -1985,9 +1920,26 @@
                         </div>
                     </div>
                 </div>
+                
+                <div class="study-card">
+                    <h3 class="study-card-title">Practical Example: RLC Circuit Design</h3>
+                    <p><strong>Design Problem:</strong> Design an RLC filter with cutoff frequency 1kHz.</p>
+                    <p><strong>Given:</strong> \( L = 10mH \), required \( Q \)-factor = 5</p>
+                    <p><strong>Find:</strong> \( R \) and \( C \) values</p>
+                    
+                    <div class="math-display">
+                        \( \omega_0 = 2\pi \times 1000 = 2000\pi \, \text{rad/s} \)
+                    </div>
+                    <div class="math-display">
+                        \( \omega_0 = \frac{1}{\sqrt{LC}} \Rightarrow C = \frac{1}{L\omega_0^2} \)
+                    </div>
+                    <div class="math-display">
+                        \( Q = \frac{1}{R}\sqrt{\frac{L}{C}} \Rightarrow R = \frac{1}{Q}\sqrt{\frac{L}{C}} \)
+                    </div>
+                </div>
             </div>
             
-            <!-- Mass-Spring-Damper Application - INTERACTIVE -->
+            <!-- Mass-Spring-Damper Application -->
             <div class="card">
                 <h2 class="card-title">Mass-Spring-Damper Systems</h2>
                 
@@ -2018,46 +1970,13 @@
                         <li>\( F(t) \) = external force (N)</li>
                     </ul>
                     
-                    <h4 class="mt-4">Interactive Mass-Spring-Damper Solver</h4>
-                    
-                    <div class="input-group mt-4">
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
-                            <div>
-                                <label for="mass" class="form-label">Mass \(m\) (kg)</label>
-                                <input type="number" id="mass" class="form-input" step="0.1" min="0.1" value="2">
-                            </div>
-                            <div>
-                                <label for="damping" class="form-label">Damping \(c\) (N·s/m)</label>
-                                <input type="number" id="damping" class="form-input" step="0.1" min="0" value="4">
-                            </div>
-                            <div>
-                                <label for="springConstant" class="form-label">Spring Constant \(k\) (N/m)</label>
-                                <input type="number" id="springConstant" class="form-input" step="0.1" min="0.1" value="8">
-                            </div>
-                        </div>
-                        
-                        <button class="submit-btn" id="calculateMSD" style="margin-top: 1rem;">Calculate System Response</button>
-                    </div>
-                    
-                    <div class="result-container mt-4" id="msdResult" style="display: none;">
-                        <h4 class="mb-2" style="color: var(--green);">System Analysis Results:</h4>
-                        
-                        <div class="math-display" id="naturalFrequencyResult">
-                            <!-- Natural frequency will appear here -->
-                        </div>
-                        
-                        <div class="math-display mt-2" id="dampingRatioResult">
-                            <!-- Damping ratio will appear here -->
-                        </div>
-                        
-                        <div class="math-display mt-2" id="dampingStateMSD">
-                            <!-- Damping state will appear here -->
-                        </div>
-                        
-                        <div class="math-display mt-2" id="motionEquation">
-                            <!-- Equation of motion will appear here -->
-                        </div>
-                    </div>
+                    <h4 class="mt-4">Engineering Significance:</h4>
+                    <ul>
+                        <li><strong>Vehicle Suspension:</strong> Design for comfort and stability</li>
+                        <li><strong>Building Design:</strong> Earthquake-resistant structures</li>
+                        <li><strong>Machinery:</strong> Vibration analysis in rotating equipment</li>
+                        <li><strong>Aerospace:</strong> Control surface flutter prevention</li>
+                    </ul>
                     
                     <h4 class="mt-4">Damping Ratio (\( \zeta \)) Analysis:</h4>
                     <div class="root-analysis-grid">
@@ -2087,6 +2006,23 @@
                             </div>
                             <p>where \( r_{1,2} = -\zeta\omega_n \pm \omega_n\sqrt{\zeta^2-1} \)</p>
                         </div>
+                    </div>
+                </div>
+                
+                <div class="study-card">
+                    <h3 class="study-card-title">Practical Example: Car Suspension Design</h3>
+                    <p><strong>Design Problem:</strong> Design suspension for a car with mass 1000kg per wheel.</p>
+                    <p><strong>Requirements:</strong> Natural frequency 1.5Hz, damping ratio 0.7</p>
+                    <p><strong>Find:</strong> Spring constant \( k \) and damping coefficient \( c \)</p>
+                    
+                    <div class="math-display">
+                        \( \omega_n = 2\pi \times 1.5 = 3\pi \, \text{rad/s} \)
+                    </div>
+                    <div class="math-display">
+                        \( \omega_n = \sqrt{\frac{k}{m}} \Rightarrow k = m\omega_n^2 \)
+                    </div>
+                    <div class="math-display">
+                        \( \zeta = \frac{c}{2\sqrt{km}} \Rightarrow c = 2\zeta\sqrt{km} \)
                     </div>
                 </div>
             </div>
@@ -2434,7 +2370,6 @@
             }
         };
         
-        // 
         // Initialize the application
         function initApp() {
             // Load saved state from localStorage
@@ -2446,7 +2381,6 @@
             setupMobileMenu();
             setupFeedbackForm();
             setupPracticeHints();
-            setupInteractiveCalculators(); // ADD THIS LINE for calculator functionality
             
             // Render the current page
             renderPage(AppState.currentPage);
@@ -2458,172 +2392,6 @@
             if (window.MathJax) {
                 window.MathJax.typesetPromise().then(() => {
                     console.log('MathJax initial rendering complete');
-                });
-            }
-        }
-
-        // Interactive Calculators for Applications Page
-        function setupInteractiveCalculators() {
-            // RLC Circuit Calculator
-            const calculateRLCBtn = document.getElementById('calculateRLC');
-            if (calculateRLCBtn) {
-                calculateRLCBtn.addEventListener('click', calculateRLCCircuit);
-            }
-            
-            // Mass-Spring-Damper Calculator
-            const calculateMSDBtn = document.getElementById('calculateMSD');
-            if (calculateMSDBtn) {
-                calculateMSDBtn.addEventListener('click', calculateMassSpringDamper);
-            }
-        }
-        
-        // RLC Circuit Calculation Function
-        function calculateRLCCircuit() {
-            // Get input values
-            const R = parseFloat(document.getElementById('resistance').value);
-            const L = parseFloat(document.getElementById('inductance').value);
-            const C = parseFloat(document.getElementById('capacitance').value);
-            
-            // Validate inputs
-            if (isNaN(R) || isNaN(L) || isNaN(C) || R < 0 || L <= 0 || C <= 0) {
-                alert('Please enter valid positive values for all parameters.');
-                return;
-            }
-            
-            // Calculate discriminant D = R^2 - 4L/C
-            const D = Math.pow(R, 2) - (4 * L / C);
-            
-            // Determine damping state
-            let dampingState = '';
-            let dampingDescription = '';
-            let r1, r2;
-            let currentEquation = '';
-            
-            if (D > 0) {
-                // Overdamped: Two distinct real roots
-                dampingState = 'Overdamped';
-                dampingDescription = 'Slow, non-oscillatory decay';
-                r1 = (-R + Math.sqrt(D)) / (2 * L);
-                r2 = (-R - Math.sqrt(D)) / (2 * L);
-                currentEquation = `i(t) = C_1 e^{${r1.toFixed(3)}t} + C_2 e^{${r2.toFixed(3)}t}`;
-            } else if (Math.abs(D) < 1e-10) {
-                // Critically damped: Repeated real roots
-                dampingState = 'Critically Damped';
-                dampingDescription = 'Fastest return to equilibrium without oscillation';
-                r1 = -R / (2 * L);
-                currentEquation = `i(t) = (C_1 + C_2 t)e^{${r1.toFixed(3)}t}`;
-            } else {
-                // Underdamped: Complex conjugate roots
-                dampingState = 'Underdamped';
-                dampingDescription = 'Oscillatory decay';
-                const alpha = -R / (2 * L);
-                const beta = Math.sqrt(-D) / (2 * L);
-                currentEquation = `i(t) = e^{${alpha.toFixed(3)}t}[C_1 \\cos(${beta.toFixed(3)}t) + C_2 \\sin(${beta.toFixed(3)}t)]`;
-                r1 = alpha + beta * 1i; // Complex notation
-                r2 = alpha - beta * 1i;
-            }
-            
-            // Display results
-            const resultContainer = document.getElementById('rlcResult');
-            const discriminantEl = document.getElementById('discriminantResult');
-            const dampingStateEl = document.getElementById('dampingState');
-            const rootsEl = document.getElementById('characteristicRoots');
-            const equationEl = document.getElementById('currentEquation');
-            
-            // Format discriminant display
-            let discriminantDisplay = '';
-            if (Math.abs(D) < 1e-10) {
-                discriminantDisplay = `D = R^2 - 4L/C = ${R}^2 - 4(${L})/(${C}) = 0`;
-            } else {
-                discriminantDisplay = `D = R^2 - 4L/C = ${R}^2 - 4(${L})/(${C}) = ${D.toFixed(4)}`;
-            }
-            
-            // Update DOM elements
-            discriminantEl.innerHTML = `\\[${discriminantDisplay}\\]`;
-            dampingStateEl.innerHTML = `\\[\\text{${dampingState}}: ${dampingDescription}\\]`;
-            
-            // Format roots display
-            if (D >= 0) {
-                rootsEl.innerHTML = `\\[r_1 = ${r1.toFixed(4)}, \\quad r_2 = ${r2 ? r2.toFixed(4) : r1.toFixed(4)}\\]`;
-            } else {
-                const alpha = -R / (2 * L);
-                const beta = Math.sqrt(-D) / (2 * L);
-                rootsEl.innerHTML = `\\[r_{1,2} = ${alpha.toFixed(4)} \\pm ${beta.toFixed(4)}i\\]`;
-            }
-            
-            equationEl.innerHTML = `\\[${currentEquation}\\]`;
-            
-            // Show result container
-            resultContainer.style.display = 'block';
-            
-            // Render MathJax for the new equations
-            if (window.MathJax && window.MathJax.typesetPromise) {
-                MathJax.typesetPromise().then(() => {
-                    console.log('RLC circuit MathJax rendered');
-                });
-            }
-        }
-        
-        // Mass-Spring-Damper Calculation Function
-        function calculateMassSpringDamper() {
-            // Get input values
-            const m = parseFloat(document.getElementById('mass').value);
-            const c = parseFloat(document.getElementById('damping').value);
-            const k = parseFloat(document.getElementById('springConstant').value);
-            
-            // Validate inputs
-            if (isNaN(m) || isNaN(c) || isNaN(k) || m <= 0 || c < 0 || k <= 0) {
-                alert('Please enter valid positive values for all parameters.');
-                return;
-            }
-            
-            // Calculate natural frequency ω_n = sqrt(k/m)
-            const omega_n = Math.sqrt(k / m);
-            
-            // Calculate damping ratio ζ = c / (2√(km))
-            const zeta = c / (2 * Math.sqrt(k * m));
-            
-            // Determine damping state
-            let dampingState = '';
-            let motionEquation = '';
-            
-            if (zeta < 1) {
-                // Underdamped
-                dampingState = `Underdamped (\\zeta < 1): Oscillatory motion with exponential decay`;
-                const omega_d = omega_n * Math.sqrt(1 - Math.pow(zeta, 2));
-                motionEquation = `x(t) = e^{-${zeta.toFixed(3)}\\omega_n t}[A\\cos(${omega_d.toFixed(3)}t) + B\\sin(${omega_d.toFixed(3)}t)]`;
-            } else if (Math.abs(zeta - 1) < 1e-10) {
-                // Critically damped
-                dampingState = `Critically Damped (\\zeta = 1): Fastest return to equilibrium without oscillation`;
-                motionEquation = `x(t) = (A + Bt)e^{-\\omega_n t}`;
-            } else {
-                // Overdamped
-                dampingState = `Overdamped (\\zeta > 1): Slow, non-oscillatory return to equilibrium`;
-                const r1 = -zeta * omega_n + omega_n * Math.sqrt(Math.pow(zeta, 2) - 1);
-                const r2 = -zeta * omega_n - omega_n * Math.sqrt(Math.pow(zeta, 2) - 1);
-                motionEquation = `x(t) = Ae^{${r1.toFixed(3)}t} + Be^{${r2.toFixed(3)}t}`;
-            }
-            
-            // Display results
-            const resultContainer = document.getElementById('msdResult');
-            const naturalFreqEl = document.getElementById('naturalFrequencyResult');
-            const dampingRatioEl = document.getElementById('dampingRatioResult');
-            const dampingStateEl = document.getElementById('dampingStateMSD');
-            const equationEl = document.getElementById('motionEquation');
-            
-            // Update DOM elements
-            naturalFreqEl.innerHTML = `\\[\\omega_n = \\sqrt{\\frac{k}{m}} = \\sqrt{\\frac{${k}}{${m}}} = ${omega_n.toFixed(4)} \\, \\text{rad/s}\\]`;
-            dampingRatioEl.innerHTML = `\\[\\zeta = \\frac{c}{2\\sqrt{km}} = \\frac{${c}}{2\\sqrt{${k} \\times ${m}}} = ${zeta.toFixed(4)}\\]`;
-            dampingStateEl.innerHTML = `\\[${dampingState}\\]`;
-            equationEl.innerHTML = `\\[${motionEquation}\\]`;
-            
-            // Show result container
-            resultContainer.style.display = 'block';
-            
-            // Render MathJax for the new equations
-            if (window.MathJax && window.MathJax.typesetPromise) {
-                MathJax.typesetPromise().then(() => {
-                    console.log('Mass-Spring-Damper MathJax rendered');
                 });
             }
         }
@@ -3139,4 +2907,3 @@
 </body>
 
 </html>
-
