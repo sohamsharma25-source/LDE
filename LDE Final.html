@@ -1,0 +1,2909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LDE Learning Portal | PCCOE</title>
+    
+    <!-- MathJax for LaTeX-style equation rendering -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        :root {
+            --navy: #0f172a;
+            --navy-light: #1e293b;
+            --blue: #3b82f6;
+            --blue-light: #60a5fa;
+            --green: #10b981;
+            --green-light: #34d399;
+            --orange: #f97316;
+            --orange-light: #fb923c;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-700: #374151;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            
+            /* Dark mode variables */
+            --dark-bg: #0a0a0a;
+            --dark-card: #1a1a1a;
+            --dark-text: #f8fafc;
+            --dark-border: #2d3748;
+        }
+        
+        /* Dark mode */
+        body.dark-mode {
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+        }
+        
+        body.dark-mode .card,
+        body.dark-mode .scenario-card,
+        body.dark-mode .path-card,
+        body.dark-mode .educator-card {
+            background-color: var(--dark-card);
+            color: var(--dark-text);
+            border-color: var(--dark-border);
+        }
+        
+        body.dark-mode .main-content {
+            background-color: var(--dark-bg);
+        }
+        
+        body.dark-mode .page-title,
+        body.dark-mode .card-title,
+        body.dark-mode .section-title,
+        body.dark-mode .example-title {
+            color: var(--dark-text);
+        }
+        
+        body.dark-mode .math-display {
+            background-color: #2d3748;
+            color: #e2e8f0;
+        }
+        
+        body.dark-mode .option {
+            background-color: #2d3748;
+            color: var(--dark-text);
+        }
+        
+        body.dark-mode .explanation-box {
+            background-color: #2d3748;
+        }
+        
+        /* New styles for Project Developers grid */
+        .developers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .developer-card {
+            background-color: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+            border-left: 4px solid var(--green);
+        }
+        
+        body.dark-mode .developer-card {
+            background-color: var(--dark-card);
+        }
+        
+        .developer-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .developer-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--navy);
+        }
+        
+        body.dark-mode .developer-name {
+            color: var(--dark-text);
+        }
+        
+        .developer-roll {
+            color: var(--blue);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        
+        .developer-branch {
+            color: var(--gray-700);
+            font-size: 0.875rem;
+        }
+        
+        body.dark-mode .developer-branch {
+            color: var(--gray-300);
+        }
+        
+        /* Faculty card styles */
+        .faculty-card {
+            background-color: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            box-shadow: var(--shadow);
+            margin-top: 1rem;
+            border-left: 4px solid var(--blue);
+        }
+        
+        body.dark-mode .faculty-card {
+            background-color: var(--dark-card);
+        }
+        
+        .faculty-photo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--blue) 0%, var(--green) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            font-weight: bold;
+            margin-right: 1.5rem;
+            flex-shrink: 0;
+        }
+        
+        .faculty-info {
+            flex: 1;
+        }
+        
+        .faculty-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--navy);
+        }
+        
+        body.dark-mode .faculty-name {
+            color: var(--dark-text);
+        }
+        
+        .faculty-designation {
+            color: var(--blue);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        
+        .faculty-department {
+            color: var(--gray-700);
+            font-size: 0.875rem;
+        }
+        
+        body.dark-mode .faculty-department {
+            color: var(--gray-300);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+        
+        body {
+            background-color: var(--gray-50);
+            color: var(--navy);
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        /* Top Header - UPDATED FOR PCCOE */
+        .top-header {
+            position: fixed;
+            top: 0;
+            left: 200px;
+            right: 0;
+            height: 70px;
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 2rem;
+            z-index: 99;
+            box-shadow: var(--shadow-lg);
+            transition: left 0.3s ease;
+        }
+        
+        .institute-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .institute-logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--blue) 0%, var(--blue-light) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .institute-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            text-align: center;
+        }
+        
+        /* Sidebar Styles */
+        .sidebar {
+            width: 200px;
+            background-color: var(--navy);
+            color: white;
+            position: fixed;
+            height: 100vh;
+            padding: 1.5rem 1rem;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease;
+            z-index: 100;
+            box-shadow: var(--shadow-lg);
+            top: 0;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .logo span {
+            color: var(--blue-light);
+        }
+        
+        .nav-menu {
+            list-style: none;
+            flex-grow: 1;
+        }
+        
+        .nav-item {
+            margin-bottom: 0.5rem;
+        }
+        
+        .nav-link {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: var(--gray-300);
+            text-decoration: none;
+            border-radius: 0.375rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 500;
+        }
+        
+        .nav-link:hover {
+            background-color: var(--navy-light);
+            color: white;
+            transform: translateX(5px);
+        }
+        
+        .nav-link.active {
+            background-color: var(--blue);
+            color: white;
+            transform: translateX(5px);
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+        }
+        
+        .user-info {
+            padding: 1rem 0;
+            border-top: 1px solid var(--navy-light);
+            margin-top: auto;
+        }
+        
+        .user-level {
+            font-size: 0.875rem;
+            color: var(--gray-300);
+        }
+        
+        .level-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background-color: var(--blue);
+            color: white;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 0.25rem;
+        }
+        
+        /* Main Content Styles */
+        .main-content {
+            flex: 1;
+            margin-left: 200px;
+            margin-top: 70px;
+            padding: 2rem;
+            max-width: 1200px;
+            transition: all 0.3s;
+        }
+        
+        .page-header {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--blue-light);
+        }
+        
+        .page-title {
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        body.dark-mode .page-title {
+            background: linear-gradient(135deg, var(--blue-light) 0%, var(--green-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .page-subtitle {
+            color: var(--gray-700);
+            font-size: 1.125rem;
+            font-weight: 400;
+        }
+        
+        body.dark-mode .page-subtitle {
+            color: var(--gray-300);
+        }
+        
+        /* Card Styles */
+        .card {
+            background-color: white;
+            border-radius: 1rem;
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s;
+            border: 1px solid var(--gray-200);
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--navy);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .card-title::before {
+            content: '';
+            width: 4px;
+            height: 24px;
+            background-color: var(--blue);
+            border-radius: 2px;
+        }
+        
+        /* Study Card Styles */
+        .study-card {
+            background-color: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--blue);
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+        }
+        
+        .study-card:hover {
+            transform: translateY(-3px);
+        }
+        
+        .study-card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--navy);
+        }
+        
+        /* Stepper for Method to Solve */
+        .stepper {
+            margin: 2rem 0;
+        }
+        
+        .step {
+            display: flex;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 24px;
+            top: 48px;
+            bottom: -2rem;
+            width: 2px;
+            background-color: var(--gray-300);
+        }
+        
+        .step-number {
+            width: 48px;
+            height: 48px;
+            background-color: var(--blue);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 1.25rem;
+            margin-right: 1.5rem;
+            flex-shrink: 0;
+            z-index: 1;
+        }
+        
+        .step-content {
+            flex: 1;
+            padding-top: 0.5rem;
+        }
+        
+        .step-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--navy);
+        }
+        
+        /* Practice Questions Styles */
+        .practice-card {
+            border-left: 4px solid var(--orange);
+        }
+        
+        .hint-btn {
+            background-color: var(--orange);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+        
+        .hint-btn:hover {
+            background-color: var(--orange-light);
+            transform: scale(1.05);
+        }
+        
+        .hint-box {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background-color: var(--gray-100);
+            border-radius: 0.75rem;
+            display: none;
+            animation: fadeIn 0.5s ease;
+            border-left: 4px solid var(--orange);
+        }
+        
+        .hint-box.show {
+            display: block;
+        }
+        
+        /* Applications Grid */
+        .applications-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .application-card {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .application-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .application-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--blue);
+        }
+        
+        /* Reference Materials */
+        .reference-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .reference-card {
+            background-color: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--green);
+        }
+        
+        .reference-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .download-btn {
+            background-color: var(--green);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.2s;
+            margin-top: 1rem;
+            display: inline-block;
+            text-decoration: none;
+        }
+        
+        .download-btn:hover {
+            background-color: var(--green-light);
+        }
+        
+        /* Feedback Form */
+        .feedback-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--navy);
+        }
+        
+        body.dark-mode .form-label {
+            color: var(--dark-text);
+        }
+        
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--gray-300);
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+        
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--blue);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        
+        .form-textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            background-color: var(--blue);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+        
+        .submit-btn:hover {
+            background-color: var(--blue-light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+        
+        /* Math Display */
+        .math-display {
+            background-color: var(--gray-100);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            margin: 1rem 0;
+            font-family: 'Times New Roman', serif;
+            overflow-x: auto;
+            border-left: 4px solid var(--blue);
+            transition: background-color 0.3s;
+        }
+        
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border: 1px solid var(--gray-300);
+        }
+        
+        .comparison-table th {
+            background-color: var(--blue);
+            color: white;
+            font-weight: 600;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background-color: var(--gray-100);
+        }
+        
+        body.dark-mode .comparison-table tr:nth-child(even) {
+            background-color: #2d3748;
+        }
+        
+        body.dark-mode .comparison-table th,
+        body.dark-mode .comparison-table td {
+            border-color: var(--dark-border);
+        }
+        
+        /* Quiz Page Styles */
+        .quiz-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .progress-bar {
+            height: 0.5rem;
+            background-color: var(--gray-200);
+            border-radius: 9999px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+        
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--blue) 0%, var(--green) 100%);
+            width: 0%;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .question-text {
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+        
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+        }
+        
+        .option {
+            padding: 1rem 1.25rem;
+            background-color: var(--gray-100);
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+        
+        .option:hover {
+            background-color: var(--gray-200);
+            transform: translateX(5px);
+        }
+        
+        .option.selected {
+            border-color: var(--blue);
+            background-color: #e0f2fe;
+            transform: translateX(5px);
+        }
+        
+        .option.correct {
+            border-color: var(--green);
+            background-color: #dcfce7;
+        }
+        
+        .option.incorrect {
+            border-color: #ef4444;
+            background-color: #fee2e2;
+        }
+        
+        .explanation-box {
+            padding: 1.5rem;
+            background-color: var(--gray-100);
+            border-radius: 0.75rem;
+            margin-top: 1.5rem;
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .explanation-box.show {
+            display: block;
+        }
+        
+        .explanation-title {
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .explanation-title::before {
+            content: '💡';
+            font-size: 1.2rem;
+        }
+        
+        .quiz-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+        
+        .quiz-btn {
+            padding: 0.75rem 1.5rem;
+            background-color: var(--blue);
+            color: white;
+            border: none;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .quiz-btn:hover {
+            background-color: var(--blue-light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+        
+        .quiz-btn:disabled {
+            background-color: var(--gray-300);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .results-container {
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--blue) 0%, var(--green) 100%);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 2rem;
+            font-size: 2.5rem;
+            font-weight: 700;
+            box-shadow: var(--shadow-lg);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .score-label {
+            font-size: 1rem;
+            font-weight: 400;
+        }
+        
+        .path-recommendation {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
+            border-radius: 0.75rem;
+            border-left: 4px solid var(--blue);
+        }
+        
+        body.dark-mode .path-recommendation {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+        }
+        
+        /* About Page Styles */
+        .educators-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .educator-card {
+            background-color: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+        }
+        
+        .educator-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .educator-photo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--blue) 0%, var(--green) 100%);
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .educator-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .educator-credentials {
+            color: var(--gray-700);
+            font-size: 0.875rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        body.dark-mode .educator-credentials {
+            color: var(--gray-300);
+        }
+        
+        .educator-bio {
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+        
+        .vision-card {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            padding: 2rem;
+            border-radius: 1rem;
+            margin: 2rem 0;
+            border-left: 6px solid var(--blue);
+        }
+        
+        body.dark-mode .vision-card {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+        }
+        
+        .vision-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--navy);
+        }
+        
+        body.dark-mode .vision-title {
+            color: white;
+        }
+        
+        /* Hamburger Menu for Mobile */
+        .hamburger-btn {
+            display: none;
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 101;
+            background-color: var(--navy);
+            color: white;
+            border: none;
+            border-radius: 0.375rem;
+            padding: 0.75rem;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+        }
+        
+        .hamburger-btn span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 5px 0;
+            transition: 0.3s;
+        }
+        
+        /* Success Message */
+        .success-message {
+            padding: 1.5rem;
+            background-color: #dcfce7;
+            border: 1px solid #22c55e;
+            border-radius: 0.75rem;
+            margin: 1rem 0;
+            display: none;
+        }
+        
+        .success-message.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* New: LDE-specific styles */
+        .root-analysis-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .root-case-card {
+            background-color: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+        }
+        
+        .root-case-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .root-case-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--blue);
+        }
+        
+        .circuit-diagram {
+            width: 100%;
+            max-width: 400px;
+            margin: 1rem auto;
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: var(--shadow);
+            border: 2px solid var(--gray-200);
+        }
+        
+        .circuit-element {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background-color: var(--gray-100);
+            border-radius: 0.375rem;
+            margin: 0 0.5rem;
+            font-weight: 500;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .main-content {
+                padding: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                top: 0;
+                height: 100vh;
+            }
+            
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            
+            .top-header {
+                left: 0;
+                padding: 0 1rem;
+                justify-content: center;
+            }
+            
+            .institute-name {
+                font-size: 1rem;
+            }
+            
+            .main-content {
+                margin-left: 0;
+                margin-top: 70px;
+                padding: 1rem;
+            }
+            
+            .hamburger-btn {
+                display: block;
+            }
+            
+            .applications-grid,
+            .reference-grid,
+            .educators-grid,
+            .root-analysis-grid,
+            .developers-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .page-title {
+                font-size: 1.75rem;
+            }
+            
+            .step:not(:last-child)::after {
+                left: 20px;
+            }
+            
+            .step-number {
+                width: 40px;
+                height: 40px;
+                margin-right: 1rem;
+            }
+            
+            .faculty-card {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .faculty-photo {
+                margin-right: 0;
+                margin-bottom: 1.5rem;
+            }
+        }
+        
+        /* Typography for Math */
+        .math {
+            font-family: 'Times New Roman', serif;
+            font-size: 1.1em;
+        }
+        
+        .math-inline {
+            font-family: 'Times New Roman', serif;
+        }
+        
+        /* Utility Classes */
+        .hidden {
+            display: none !important;
+        }
+        
+        .mt-1 { margin-top: 0.25rem; }
+        .mt-2 { margin-top: 0.5rem; }
+        .mt-3 { margin-top: 0.75rem; }
+        .mt-4 { margin-top: 1rem; }
+        .mt-6 { margin-top: 1.5rem; }
+        .mt-8 { margin-top: 2rem; }
+        
+        .mb-1 { margin-bottom: 0.25rem; }
+        .mb-2 { margin-bottom: 0.5rem; }
+        .mb-3 { margin-bottom: 0.75rem; }
+        .mb-4 { margin-bottom: 1rem; }
+        .mb-6 { margin-bottom: 1.5rem; }
+        .mb-8 { margin-bottom: 2rem; }
+        
+        .text-center { text-align: center; }
+        .text-green { color: var(--green); }
+        .text-blue { color: var(--blue); }
+        
+        .font-bold { font-weight: 700; }
+    </style>
+</head>
+<body>
+    <!-- Hamburger Menu Button (Mobile Only) -->
+    <button class="hamburger-btn" id="hamburgerBtn">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    
+    <!-- Top Header -->
+    <header class="top-header" id="topHeader">
+        <div class="institute-info">
+            <div class="institute-logo" id="instituteLogo">
+                <!-- Replaced text with image tag -->
+                <img src="logo.png" alt="PCCOE Logo" style="width: 100%; height: 100%; object-fit: contain; border-radius: 8px;">
+            </div>
+            <div class="institute-name" id="instituteName">
+                Pimpri Chinchwad College of Engineering
+            </div>
+        </div>
+    </header>
+    
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar" id="sidebar">
+        <div class="logo">
+            <span>LDE</span> Portal
+        </div>
+        
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="#home" class="nav-link active" data-page="home">Home</a>
+            </li>
+            <li class="nav-item">
+                <a href="#theory" class="nav-link" data-page="theory">Theory</a>
+            </li>
+            <li class="nav-item">
+                <a href="#methods" class="nav-link" data-page="methods">Method to Solve</a>
+            </li>
+            <li class="nav-item">
+                <a href="#practice" class="nav-link" data-page="practice">Practice Questions</a>
+            </li>
+            <li class="nav-item">
+                <a href="#quiz" class="nav-link" data-page="quiz">Quiz</a>
+            </li>
+            <li class="nav-item">
+                <a href="#reference" class="nav-link" data-page="reference">Reference</a>
+            </li>
+            <li class="nav-item">
+                <a href="#applications" class="nav-link" data-page="applications">Applications</a>
+            </li>
+            <li class="nav-item">
+                <a href="#about" class="nav-link" data-page="about">About</a>
+            </li>
+            <li class="nav-item">
+                <a href="#feedback" class="nav-link" data-page="feedback">Feedback</a>
+            </li>
+        </ul>
+        
+        <div class="user-info">
+            <div class="user-level">Your Level:</div>
+            <div class="level-badge" id="userLevel">Beginner</div>
+        </div>
+    </nav>
+    
+    <!-- Main Content Area -->
+    <main class="main-content" id="mainContent">
+        <!-- Home Page -->
+        <div class="page active" id="home-page">
+            <div class="page-header">
+                <h1 class="page-title">Linear Differential Equations Learning Portal</h1>
+                <p class="page-subtitle">Comprehensive resource for First-Year Engineering Students at PCCOE</p>
+            </div>
+            
+            <div class="card">
+                <h2 class="card-title">Syllabus Mapping - Linear Differential Equations</h2>
+                <p class="mb-4">Complete coverage of PCCOE syllabus with detailed explanations and examples:</p>
+                
+                <div class="study-card">
+                    <h3 class="study-card-title">Unit I: First-Order Linear Differential Equations</h3>
+                    <p><strong>Standard Form:</strong> \( \frac{dy}{dx} + P(x)y = Q(x) \)</p>
+                    <p><strong>Key Concepts:</strong> Integrating Factor (\( \mu(x) = e^{\int P(x) dx} \)), General Solution, Initial Value Problems</p>
+                    <p><strong>Applications:</strong> Population models, Cooling/Warming problems</p>
+                </div>
+                
+                <div class="study-card">
+                    <h3 class="study-card-title">Unit II: Second-Order Linear Differential Equations</h3>
+                    <p><strong>Homogeneous Form:</strong> \( a y'' + b y' + c y = 0 \)</p>
+                    <p><strong>Key Concepts:</strong> Auxiliary Equation, Characteristic Roots, Wronskian, Superposition Principle</p>
+                    <p><strong>Solution Cases:</strong> Real distinct roots, Real repeated roots, Complex conjugate roots</p>
+                </div>
+                
+                <div class="study-card">
+                    <h3 class="study-card-title">Unit III: Non-Homogeneous LDEs</h3>
+                    <p><strong>General Form:</strong> \( a y'' + b y' + c y = F(x) \)</p>
+                    <p><strong>Solution Methods:</strong> Method of Undetermined Coefficients, Variation of Parameters</p>
+                    <p><strong>Applications:</strong> Forced oscillations, Electrical circuits with sources</p>
+                </div>
+                
+                <div class="study-card">
+                    <h3 class="study-card-title">Unit IV: Applications to Engineering Systems</h3>
+                    <p><strong>Electrical Circuits:</strong> RLC circuits analysis</p>
+                    <p><strong>Mechanical Systems:</strong> Mass-Spring-Damper systems</p>
+                    <p><strong>Other Applications:</strong> Chemical reactions, Heat transfer, Fluid dynamics</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Theory Page -->
+        <div class="page hidden" id="theory-page">
+            <div class="page-header">
+                <h1 class="page-title">Theoretical Foundations of LDEs</h1>
+                <p class="page-subtitle">Core definitions, theorems, and mathematical foundations</p>
+            </div>
+            
+            <div class="card">
+                <h2 class="card-title">First-Order Linear Differential Equations</h2>
+                
+                <div class="study-card">
+                    <h3 class="study-card-title">Standard Form</h3>
+                    <p>A first-order linear differential equation has the form:</p>
+                    <div class="math-display">
+                        \( \frac{dy}{dx} + P(x)y = Q(x) \)
+                    </div>
+                    <p>where \( P(x) \) and \( Q(x) \) are continuous functions of \( x \).</p>
+                </div>
+                
+                <div class="study-card">
+                    <h3 class="study-card-title">Integrating Factor (\( \mu(x) \))</h3>
+                    <p>The integrating factor is defined as:</p>
+                    <div class="math-display">
+                        \( \mu(x) = e^{\int P(x) dx} \)
+                    </div>
+                    <p>Multiplying both sides of the standard form by \( \mu(x) \):</p>
+                    <div class="math-display">
+                        \( \frac{d}{dx}[\mu(x)y] = \mu(x)Q(x) \)
+                    </div>
+                </div>
+                
+                <div class="study-card">
+                    <h3 class="study-card-title">General Solution</h3>
+                    <p>The general solution of a first-order LDE is given by:</p>
+                    <div class="math-display">
+                        \( y = \frac{1}{\mu(x)} \left[ \int \mu(x)Q(x) dx + C \right] \)
+                    </div>
+                    <p>where \( C \) is the constant of integration.</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2 class="card-title">Second-Order Linear Differential Equations</h2>
+                
+                <div class="study-card">
+                    <h3 class="study-card-title">Standard Form</h3>
+                    <p>A second-order linear differential equation with constant coefficients:</p>
+                    <div class="math-display">
+                        \( a \frac{d^2y}{dx^2} + b \frac{dy}{dx} + c y = 0 \)
+                    </div>
+                    <p>where \( a, b, c \) are constants and \( a \neq 0 \).</p>
+                </div>
+                
+                <div class="study-card">
+                    <h3 class="study-card-title">Auxiliary (Characteristic) Equation</h3>
+                    <p>To solve, we assume a solution of the form \( y = e^{rx} \), leading to:</p>
+                    <div class="math-display">
+                        \( a r^2 + b r + c = 0 \)
+                    </div>
+                    <p>This quadratic equation is called the auxiliary or characteristic equation.</p>
+                </div>
+                
+                <div class="study-card">
+                    <h3 class="study-card-title">Wronskian and Linear Independence</h3>
+                    <p>For two solutions \( y_1(x) \) and \( y_2(x) \), the Wronskian is:</p>
+                    <div class="math-display">
+                        \( W(y_1, y_2) = \begin{vmatrix} y_1 & y_2 \\ y_1' & y_2' \end{vmatrix} = y_1 y_2' - y_2 y_1' \)
+                    </div>
+                    <p>If \( W(y_1, y_2) \neq 0 \) for some \( x \), then \( y_1 \) and \( y_2 \) are linearly independent and form a fundamental set of solutions.</p>
+                </div>
+                
+                <div class="study-card">
+                    <h3 class="study-card-title">Root Analysis of Auxiliary Equation</h3>
+                    <div class="root-analysis-grid">
+                        <div class="root-case-card">
+                            <h4 class="root-case-title">Case 1: Real and Distinct Roots</h4>
+                            <p>If \( r_1 \neq r_2 \) and both are real:</p>
+                            <div class="math-display">
+                                \( y = C_1 e^{r_1 x} + C_2 e^{r_2 x} \)
+                            </div>
+                            <p><strong>Example:</strong> \( r^2 - 3r + 2 = 0 \) gives \( r = 1, 2 \)</p>
+                        </div>
+                        
+                        <div class="root-case-card">
+                            <h4 class="root-case-title">Case 2: Real and Repeated Roots</h4>
+                            <p>If \( r_1 = r_2 = r \):</p>
+                            <div class="math-display">
+                                \( y = (C_1 + C_2 x)e^{r x} \)
+                            </div>
+                            <p><strong>Example:</strong> \( r^2 - 4r + 4 = 0 \) gives \( r = 2, 2 \)</p>
+                        </div>
+                        
+                        <div class="root-case-card">
+                            <h4 class="root-case-title">Case 3: Complex Conjugate Roots</h4>
+                            <p>If \( r = \alpha \pm i\beta \):</p>
+                            <div class="math-display">
+                                \( y = e^{\alpha x}[C_1 \cos(\beta x) + C_2 \sin(\beta x)] \)
+                            </div>
+                            <p><strong>Example:</strong> \( r^2 + 4 = 0 \) gives \( r = \pm 2i \)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Method to Solve Page -->
+        <div class="page hidden" id="methods-page">
+            <div class="page-header">
+                <h1 class="page-title">Algorithmic Solution Methods</h1>
+                <p class="page-subtitle">Step-by-step approaches for solving Linear Differential Equations</p>
+            </div>
+            
+            <!-- Method 1: First-Order LDE using Integrating Factor -->
+            <div class="card">
+                <h2 class="card-title">Method 1: Solving 1st Order LDEs using Integrating Factor</h2>
+                
+                <div class="stepper">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3 class="step-title">Write in Standard Form</h3>
+                            <p>Ensure the equation is in the form:</p>
+                            <div class="math-display">
+                                \( \frac{dy}{dx} + P(x)y = Q(x) \)
+                            </div>
+                            <p>If not, rearrange terms to match this form.</p>
+                            <p><strong>Example:</strong> \( \frac{dy}{dx} + 2y = x^2 \) has \( P(x) = 2 \), \( Q(x) = x^2 \)</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3 class="step-title">Compute Integrating Factor</h3>
+                            <p>Calculate \( \mu(x) = e^{\int P(x) dx} \)</p>
+                            <div class="math-display">
+                                \( \mu(x) = e^{\int 2 dx} = e^{2x} \)
+                            </div>
+                            <p>Don't include the constant of integration when computing \( \mu(x) \).</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3 class="step-title">Multiply Equation by \( \mu(x) \)</h3>
+                            <p>Multiply both sides of the standard form by the integrating factor:</p>
+                            <div class="math-display">
+                                \( e^{2x} \frac{dy}{dx} + 2e^{2x} y = x^2 e^{2x} \)
+                            </div>
+                            <p>Notice the left side is now \( \frac{d}{dx}[e^{2x}y] \)</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h3 class="step-title">Integrate Both Sides</h3>
+                            <p>Integrate with respect to \( x \):</p>
+                            <div class="math-display">
+                                \( \frac{d}{dx}[e^{2x}y] = x^2 e^{2x} \)
+                            </div>
+                            <div class="math-display">
+                                \( e^{2x}y = \int x^2 e^{2x} dx + C \)
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <h3 class="step-title">Solve for \( y \)</h3>
+                            <p>Divide by \( \mu(x) \) to obtain the general solution:</p>
+                            <div class="math-display">
+                                \( y = e^{-2x} \left[ \int x^2 e^{2x} dx + C \right] \)
+                            </div>
+                            <p>Evaluate the integral and simplify.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Method 2: Second-Order Homogeneous LDEs -->
+            <div class="card">
+                <h2 class="card-title">Method 2: Solving 2nd Order Homogeneous LDEs</h2>
+                
+                <div class="stepper">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3 class="step-title">Write Homogeneous Equation</h3>
+                            <p>Ensure the equation is in the form:</p>
+                            <div class="math-display">
+                                \( a y'' + b y' + c y = 0 \)
+                            </div>
+                            <p>where \( a, b, c \) are constants, \( a \neq 0 \).</p>
+                            <p><strong>Example:</strong> \( y'' - 3y' + 2y = 0 \)</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3 class="step-title">Form Characteristic Equation</h3>
+                            <p>Assume \( y = e^{rx} \) and substitute to get:</p>
+                            <div class="math-display">
+                                \( a r^2 + b r + c = 0 \)
+                            </div>
+                            <p>For our example: \( r^2 - 3r + 2 = 0 \)</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3 class="step-title">Solve Characteristic Equation</h3>
+                            <p>Find the roots using quadratic formula:</p>
+                            <div class="math-display">
+                                \( r = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a} \)
+                            </div>
+                            <p>For our example: \( r = \frac{3 \pm \sqrt{9 - 8}}{2} = \frac{3 \pm 1}{2} \)</p>
+                            <p>So \( r_1 = 2 \), \( r_2 = 1 \)</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h3 class="step-title">Write General Solution Based on Roots</h3>
+                            <div class="root-analysis-grid mt-4">
+                                <div class="root-case-card">
+                                    <h4 class="root-case-title">Case A: Real Distinct Roots</h4>
+                                    <p>If \( r_1 \neq r_2 \) (real):</p>
+                                    <div class="math-display">
+                                        \( y = C_1 e^{r_1 x} + C_2 e^{r_2 x} \)
+                                    </div>
+                                    <p><strong>Our example:</strong> \( y = C_1 e^{2x} + C_2 e^{x} \)</p>
+                                </div>
+                                
+                                <div class="root-case-card">
+                                    <h4 class="root-case-title">Case B: Real Repeated Roots</h4>
+                                    <p>If \( r_1 = r_2 = r \):</p>
+                                    <div class="math-display">
+                                        \( y = (C_1 + C_2 x)e^{r x} \)
+                                    </div>
+                                    <p><strong>Example:</strong> For \( r^2 - 4r + 4 = 0 \), \( y = (C_1 + C_2 x)e^{2x} \)</p>
+                                </div>
+                                
+                                <div class="root-case-card">
+                                    <h4 class="root-case-title">Case C: Complex Roots</h4>
+                                    <p>If \( r = \alpha \pm i\beta \):</p>
+                                    <div class="math-display">
+                                        \( y = e^{\alpha x}[C_1 \cos(\beta x) + C_2 \sin(\beta x)] \)
+                                    </div>
+                                    <p><strong>Example:</strong> For \( r^2 + 4 = 0 \), \( y = C_1 \cos(2x) + C_2 \sin(2x) \)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <h3 class="step-title">Apply Initial Conditions (if given)</h3>
+                            <p>Use conditions like \( y(x_0) = y_0 \), \( y'(x_0) = y_0' \) to find \( C_1 \) and \( C_2 \).</p>
+                            <p><strong>Example:</strong> If \( y(0) = 1 \) and \( y'(0) = 0 \), substitute to solve for constants.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Method 3: Method of Undetermined Coefficients -->
+            <div class="card">
+                <h2 class="card-title">Method 3: Method of Undetermined Coefficients</h2>
+                <p class="mb-4">For non-homogeneous equations: \( a y'' + b y' + c y = F(x) \)</p>
+                
+                <div class="stepper">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3 class="step-title">Find Complementary Solution (\( y_c \))</h3>
+                            <p>Solve the homogeneous equation \( a y'' + b y' + c y = 0 \) to get \( y_c \).</p>
+                            <p><strong>Example:</strong> For \( y'' - 3y' + 2y = e^{3x} \), first solve \( y'' - 3y' + 2y = 0 \)</p>
+                            <p>Characteristic equation: \( r^2 - 3r + 2 = 0 \) gives \( r = 1, 2 \)</p>
+                            <p>So \( y_c = C_1 e^{x} + C_2 e^{2x} \)</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3 class="step-title">Choose Trial Particular Solution (\( y_p \))</h3>
+                            <p>Based on the form of \( F(x) \), choose an appropriate trial solution:</p>
+                            <table class="comparison-table">
+                                <thead>
+                                    <tr>
+                                        <th>\( F(x) \) Form</th>
+                                        <th>Trial \( y_p \)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>\( e^{kx} \)</td>
+                                        <td>\( Ae^{kx} \)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>\( \sin(kx) \) or \( \cos(kx) \)</td>
+                                        <td>\( A\sin(kx) + B\cos(kx) \)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Polynomial of degree \( n \)</td>
+                                        <td>\( A_n x^n + A_{n-1} x^{n-1} + ... + A_0 \)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>\( e^{kx} \times \) (polynomial)</td>
+                                        <td>\( e^{kx} \times \) (polynomial of same degree)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p class="mt-4"><strong>Our example:</strong> \( F(x) = e^{3x} \), so try \( y_p = Ae^{3x} \)</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3 class="step-title">Substitute \( y_p \) into Original Equation</h3>
+                            <p>Compute derivatives of \( y_p \) and substitute into the non-homogeneous equation:</p>
+                            <div class="math-display">
+                                For \( y_p = Ae^{3x} \): \( y_p' = 3Ae^{3x} \), \( y_p'' = 9Ae^{3x} \)
+                            </div>
+                            <div class="math-display">
+                                Substitute: \( 9Ae^{3x} - 3(3Ae^{3x}) + 2(Ae^{3x}) = e^{3x} \)
+                            </div>
+                            <div class="math-display">
+                                Simplify: \( (9A - 9A + 2A)e^{3x} = e^{3x} \)
+                            </div>
+                            <div class="math-display">
+                                So: \( 2Ae^{3x} = e^{3x} \)
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h3 class="step-title">Solve for Undetermined Coefficients</h3>
+                            <p>Equate coefficients to solve for the constants in \( y_p \):</p>
+                            <div class="math-display">
+                                \( 2A = 1 \) ⇒ \( A = \frac{1}{2} \)
+                            </div>
+                            <p>Thus \( y_p = \frac{1}{2} e^{3x} \)</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <h3 class="step-title">Write General Solution</h3>
+                            <p>The general solution is \( y = y_c + y_p \):</p>
+                            <div class="math-display">
+                                \( y = C_1 e^{x} + C_2 e^{2x} + \frac{1}{2} e^{3x} \)
+                            </div>
+                            <p>Apply initial conditions if provided to determine \( C_1 \) and \( C_2 \).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Practice Questions Page  -->
+        <div class="page hidden" id="practice-page">
+            <div class="page-header">
+                <h1 class="page-title">Practice Problems</h1>
+                <p class="page-subtitle">Test your understanding with these LDE problems</p>
+            </div>
+            
+            <!-- Question 1 -->
+            <div class="card practice-card">
+                <h2 class="card-title">Question 1: First-Order LDE</h2>
+                <p>Solve the differential equation: \( \frac{dy}{dx} + 2xy = x \)</p>
+                <button class="hint-btn" data-hint="1">Show Hint</button>
+                <div class="hint-box" id="hint-1">
+                    <h4>Hint:</h4>
+                    <p>1. Identify \( P(x) = 2x \) and \( Q(x) = x \)</p>
+                    <p>2. Compute integrating factor: \( \mu(x) = e^{\int 2x dx} = e^{x^2} \)</p>
+                    <p>3. Multiply both sides by \( \mu(x) \): \( e^{x^2} \frac{dy}{dx} + 2x e^{x^2} y = x e^{x^2} \)</p>
+                    <p>4. Recognize left side as \( \frac{d}{dx}[e^{x^2} y] \)</p>
+                    <p>5. Integrate: \( e^{x^2} y = \int x e^{x^2} dx + C \)</p>
+                </div>
+            </div>
+            
+            <!-- Question 2 -->
+            <div class="card practice-card">
+                <h2 class="card-title">Question 2: Homogeneous 2nd Order LDE</h2>
+                <p>Solve: \( \frac{d^2y}{dx^2} - 4\frac{dy}{dx} + 4y = 0 \)</p>
+                <button class="hint-btn" data-hint="2">Show Hint</button>
+                <div class="hint-box" id="hint-2">
+                    <h4>Hint:</h4>
+                    <p>1. Write characteristic equation: \( r^2 - 4r + 4 = 0 \)</p>
+                    <p>2. Solve: \( (r - 2)^2 = 0 \), so \( r = 2, 2 \) (repeated roots)</p>
+                    <p>3. For repeated roots \( r_1 = r_2 = r \), solution is: \( y = (C_1 + C_2 x)e^{rx} \)</p>
+                    <p>4. Substitute \( r = 2 \): \( y = (C_1 + C_2 x)e^{2x} \)</p>
+                </div>
+            </div>
+            
+            <!-- Question 3 -->
+            <div class="card practice-card">
+                <h2 class="card-title">Question 3: Complex Roots Case</h2>
+                <p>Solve: \( \frac{d^2y}{dx^2} + 9y = 0 \)</p>
+                <button class="hint-btn" data-hint="3">Show Hint</button>
+                <div class="hint-box" id="hint-3">
+                    <h4>Hint:</h4>
+                    <p>1. Characteristic equation: \( r^2 + 9 = 0 \)</p>
+                    <p>2. Roots: \( r = \pm 3i \) (complex conjugates)</p>
+                    <p>3. For \( r = \alpha \pm i\beta \), solution is: \( y = e^{\alpha x}[C_1 \cos(\beta x) + C_2 \sin(\beta x)] \)</p>
+                    <p>4. Here \( \alpha = 0 \), \( \beta = 3 \), so: \( y = C_1 \cos(3x) + C_2 \sin(3x) \)</p>
+                </div>
+            </div>
+            
+            <!-- Question 4 -->
+            <div class="card practice-card">
+                <h2 class="card-title">Question 4: Method of Undetermined Coefficients</h2>
+                <p>Solve: \( y'' - 2y' + y = 2e^{x} \)</p>
+                <button class="hint-btn" data-hint="4">Show Hint</button>
+                <div class="hint-box" id="hint-4">
+                    <h4>Hint:</h4>
+                    <p>1. Complementary solution: Solve \( y'' - 2y' + y = 0 \)</p>
+                    <p>2. Characteristic: \( r^2 - 2r + 1 = 0 \) ⇒ \( (r-1)^2 = 0 \) ⇒ \( r = 1, 1 \)</p>
+                    <p>3. So \( y_c = (C_1 + C_2 x)e^{x} \)</p>
+                    <p>4. For particular solution: Since \( e^{x} \) is already in \( y_c \), try \( y_p = Ax^2 e^{x} \)</p>
+                    <p>5. Differentiate, substitute, and solve for \( A \)</p>
+                </div>
+            </div>
+            
+            <!-- Question 5 -->
+            <div class="card practice-card">
+                <h2 class="card-title">Question 5: Initial Value Problem</h2>
+                <p>Solve: \( y'' + 4y = 0 \), with \( y(0) = 1 \), \( y'(0) = 2 \)</p>
+                <button class="hint-btn" data-hint="5">Show Hint</button>
+                <div class="hint-box" id="hint-5">
+                    <h4>Hint:</h4>
+                    <p>1. Characteristic: \( r^2 + 4 = 0 \) ⇒ \( r = \pm 2i \)</p>
+                    <p>2. General solution: \( y = C_1 \cos(2x) + C_2 \sin(2x) \)</p>
+                    <p>3. Apply \( y(0) = 1 \): \( C_1 \cos(0) + C_2 \sin(0) = 1 \) ⇒ \( C_1 = 1 \)</p>
+                    <p>4. Differentiate: \( y' = -2C_1 \sin(2x) + 2C_2 \cos(2x) \)</p>
+                    <p>5. Apply \( y'(0) = 2 \): \( -2(1)\sin(0) + 2C_2 \cos(0) = 2 \) ⇒ \( 2C_2 = 2 \) ⇒ \( C_2 = 1 \)</p>
+                </div>
+            </div>
+            
+            <!-- Question 6 -->
+            <div class="card practice-card">
+                <h2 class="card-title">Question 6: RLC Circuit Application</h2>
+                <p>For a series RLC circuit with \( L = 1H \), \( R = 10\Omega \), \( C = 0.01F \), and \( V(t) = 0 \), find the current \( i(t) \) if \( i(0) = 0 \), \( i'(0) = 1 \).</p>
+                <button class="hint-btn" data-hint="6">Show Hint</button>
+                <div class="hint-box" id="hint-6">
+                    <h4>Hint:</h4>
+                    <p>1. Circuit equation: \( L\frac{d^2i}{dt^2} + R\frac{di}{dt} + \frac{1}{C}i = \frac{dV}{dt} \)</p>
+                    <p>2. With given values: \( \frac{d^2i}{dt^2} + 10\frac{di}{dt} + 100i = 0 \)</p>
+                    <p>3. Characteristic: \( r^2 + 10r + 100 = 0 \)</p>
+                    <p>4. Roots: \( r = -5 \pm 5\sqrt{3}i \) (underdamped case)</p>
+                    <p>5. Solution: \( i(t) = e^{-5t}[C_1 \cos(5\sqrt{3}t) + C_2 \sin(5\sqrt{3}t)] \)</p>
+                </div>
+            </div>
+            
+            <!-- Question 7 -->
+            <div class="card practice-card">
+                <h2 class="card-title">Question 7: Mass-Spring System</h2>
+                <p>A mass of 2kg is attached to a spring with constant 8N/m. The system is damped with damping constant 4N·s/m. If the mass is displaced 0.5m and released, find the equation of motion.</p>
+                <button class="hint-btn" data-hint="7">Show Hint</button>
+                <div class="hint-box" id="hint-7">
+                    <h4>Hint:</h4>
+                    <p>1. Equation: \( m\frac{d^2x}{dt^2} + c\frac{dx}{dt} + kx = 0 \)</p>
+                    <p>2. Substituting: \( 2\frac{d^2x}{dt^2} + 4\frac{dx}{dt} + 8x = 0 \)</p>
+                    <p>3. Simplify: \( \frac{d^2x}{dt^2} + 2\frac{dx}{dt} + 4x = 0 \)</p>
+                    <p>4. Characteristic: \( r^2 + 2r + 4 = 0 \)</p>
+                    <p>5. Roots: \( r = -1 \pm \sqrt{3}i \) (underdamped)</p>
+                    <p>6. Initial conditions: \( x(0) = 0.5 \), \( x'(0) = 0 \) (released from rest)</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Quiz Page -->
+        <div class="page hidden" id="quiz-page">
+            <div class="page-header">
+                <h1 class="page-title">LDE Knowledge Assessment</h1>
+                <p class="page-subtitle">Test your understanding of Linear Differential Equations</p>
+            </div>
+            
+            <div class="quiz-container">
+                <div class="card">
+                    <div class="quiz-header">
+                        <h2 class="card-title">LDE Quiz</h2>
+                        <div id="progressText">Question 1 of 5</div>
+                    </div>
+                    
+                    <div class="progress-bar">
+                        <div class="progress" id="quizProgress"></div>
+                    </div>
+                    
+                    <div id="quizContent">
+                        <!-- Quiz questions will be loaded here dynamically -->
+                    </div>
+                    
+                    <div class="quiz-controls">
+                        <button class="quiz-btn" id="prevBtn" disabled>Previous</button>
+                        <button class="quiz-btn" id="nextBtn">Next</button>
+                    </div>
+                </div>
+                
+                <div class="results-container hidden" id="resultsContainer">
+                    <div class="card">
+                        <h2 class="card-title">Quiz Results</h2>
+                        
+                        <div class="score-circle" id="scoreCircle">
+                            <span id="scoreValue">0</span>
+                            <span class="score-label">out of 5</span>
+                        </div>
+                        
+                        <h3 class="mb-4" id="resultTitle">Your Level: Beginner</h3>
+                        <p id="resultDescription">Based on your score, we recommend focusing on foundational concepts.</p>
+                        
+                        <div class="path-recommendation mt-6" id="pathRecommendation">
+                            <h4 class="font-bold mb-2">Recommended 3-Week Learning Path:</h4>
+                            <p id="pathDetails">Beginner Path: Review basic differentiation and integration before tackling LDEs.</p>
+                        </div>
+                        
+                        <button class="quiz-btn mt-6" id="retakeBtn">Retake Quiz</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Reference Page -->
+        <div class="page hidden" id="reference-page">
+            <div class="page-header">
+                <h1 class="page-title">Reference Materials</h1>
+                <p class="page-subtitle">Books, videos, and downloadable resources for LDEs</p>
+            </div>
+            
+            <div class="card">
+                <h2 class="card-title">Recommended Textbooks</h2>
+                
+                <div class="reference-grid">
+                    <div class="reference-card">
+                        <h3 class="reference-title">Advanced Engineering Mathematics</h3>
+                        <p><strong>Author:</strong> Erwin Kreyszig</p>
+                        <p><strong>Edition:</strong> 10th Edition</p>
+                        <p>Comprehensive coverage of LDEs with engineering applications. Chapter 1-3 cover differential equations thoroughly.</p>
+                    </div>
+                    
+                    <div class="reference-card">
+                        <h3 class="reference-title">Differential Equations with Applications</h3>
+                        <p><strong>Author:</strong> George F. Simmons</p>
+                        <p><strong>Edition:</strong> 2nd Edition</p>
+                        <p>Focuses on applications to physics and engineering with clear explanations of LDE solution methods.</p>
+                    </div>
+                    
+                    <div class="reference-card">
+                        <h3 class="reference-title">Engineering Mathematics</h3>
+                        <p><strong>Author:</strong> H.K. Dass</p>
+                        <p><strong>Edition:</strong> Revised Edition</p>
+                        <p>PCCOE recommended textbook with syllabus-aligned content on differential equations.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2 class="card-title">Video Lectures & Online Resources</h2>
+                
+                <div class="reference-grid">
+                    <div class="reference-card">
+                        <h3 class="reference-title">MIT OpenCourseWare - Differential Equations</h3>
+                        <p><strong>Course:</strong> 18.03 Differential Equations</p>
+                        <p><strong>Instructor:</strong> Prof. Arthur Mattuck</p>
+                        <p>Complete video lectures with problem sets and solutions. Excellent for visual learners.</p>
+                        <a href="https://ocw.mit.edu/courses/mathematics/18-03-differential-equations-spring-2010/" class="download-btn" target="_blank">Visit</a>
+                    </div>
+                    
+                    <div class="reference-card">
+                        <h3 class="reference-title">NPTEL - Engineering Mathematics I</h3>
+                        <p><strong>Course:</strong> Engineering Mathematics I</p>
+                        <p><strong>Instructor:</strong> Prof. Jitendra Kumar</p>
+                        <p>IIT-approved course covering all LDE topics with Indian engineering context.</p>
+                        <a href="https://nptel.ac.in/courses/111/105/111105121/" class="download-btn" target="_blank">Visit</a>
+                    </div>
+                    
+                    <div class="reference-card">
+                        <h3 class="reference-title">Khan Academy - Differential Equations</h3>
+                        <p>Beginner-friendly explanations with practice exercises. Great for building fundamentals.</p>
+                        <a href="https://www.khanacademy.org/math/differential-equations" class="download-btn" target="_blank">Visit</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Applications Page - FOCUSED ON RLC AND MASS-SPRING -->
+        <div class="page hidden" id="applications-page">
+            <div class="page-header">
+                <h1 class="page-title">Engineering Applications of LDEs</h1>
+                <p class="page-subtitle">Real-world use cases in electrical and mechanical engineering</p>
+            </div>
+            
+            <!-- RLC Circuits Application -->
+            <div class="card">
+                <h2 class="card-title">RLC Electrical Circuits</h2>
+                
+                <div class="study-card">
+                    <h3 class="study-card-title">Series RLC Circuit Analysis</h3>
+                    
+                    <div class="circuit-diagram text-center">
+                        <p><strong>Series RLC Circuit</strong></p>
+                        <div class="mb-2">
+                            <span class="circuit-element">V(t)</span> → 
+                            <span class="circuit-element">R</span> → 
+                            <span class="circuit-element">L</span> → 
+                            <span class="circuit-element">C</span>
+                        </div>
+                        <p>Voltage Source → Resistor → Inductor → Capacitor</p>
+                    </div>
+                    
+                    <p>The governing differential equation for a series RLC circuit is:</p>
+                    <div class="math-display">
+                        \( L\frac{d^2i}{dt^2} + R\frac{di}{dt} + \frac{1}{C}i = \frac{dV}{dt} \)
+                    </div>
+                    <p>where:</p>
+                    <ul>
+                        <li>\( L \) = inductance (Henries)</li>
+                        <li>\( R \) = resistance (Ohms)</li>
+                        <li>\( C \) = capacitance (Farads)</li>
+                        <li>\( i \) = current (Amperes)</li>
+                        <li>\( V \) = voltage source (Volts)</li>
+                    </ul>
+                    
+                    <h4 class="mt-4">Solution Approach:</h4>
+                    <p>1. Solve the homogeneous equation for natural response</p>
+                    <p>2. Find particular solution for forced response (if \( V(t) \neq 0 \))</p>
+                    <p>3. Apply initial conditions: \( i(0) \) and \( i'(0) \)</p>
+                    
+                    <h4 class="mt-4">Damping Cases:</h4>
+                    <div class="root-analysis-grid">
+                        <div class="root-case-card">
+                            <h4 class="root-case-title">Overdamped (\( R^2 > 4L/C \))</h4>
+                            <p>Two distinct real roots</p>
+                            <p>Slow, non-oscillatory decay</p>
+                            <div class="math-display">
+                                \( i(t) = C_1 e^{r_1 t} + C_2 e^{r_2 t} \)
+                            </div>
+                        </div>
+                        
+                        <div class="root-case-card">
+                            <h4 class="root-case-title">Critically Damped (\( R^2 = 4L/C \))</h4>
+                            <p>Repeated real roots</p>
+                            <p>Fastest return to equilibrium without oscillation</p>
+                            <div class="math-display">
+                                \( i(t) = (C_1 + C_2 t)e^{rt} \)
+                            </div>
+                        </div>
+                        
+                        <div class="root-case-card">
+                            <h4 class="root-case-title">Underdamped (\( R^2 < 4L/C \))</h4>
+                            <p>Complex conjugate roots</p>
+                            <p>Oscillatory decay</p>
+                            <div class="math-display">
+                                \( i(t) = e^{\alpha t}[C_1 \cos(\beta t) + C_2 \sin(\beta t)] \)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="study-card">
+                    <h3 class="study-card-title">Practical Example: RLC Circuit Design</h3>
+                    <p><strong>Design Problem:</strong> Design an RLC filter with cutoff frequency 1kHz.</p>
+                    <p><strong>Given:</strong> \( L = 10mH \), required \( Q \)-factor = 5</p>
+                    <p><strong>Find:</strong> \( R \) and \( C \) values</p>
+                    
+                    <div class="math-display">
+                        \( \omega_0 = 2\pi \times 1000 = 2000\pi \, \text{rad/s} \)
+                    </div>
+                    <div class="math-display">
+                        \( \omega_0 = \frac{1}{\sqrt{LC}} \Rightarrow C = \frac{1}{L\omega_0^2} \)
+                    </div>
+                    <div class="math-display">
+                        \( Q = \frac{1}{R}\sqrt{\frac{L}{C}} \Rightarrow R = \frac{1}{Q}\sqrt{\frac{L}{C}} \)
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Mass-Spring-Damper Application -->
+            <div class="card">
+                <h2 class="card-title">Mass-Spring-Damper Systems</h2>
+                
+                <div class="study-card">
+                    <h3 class="study-card-title">Mechanical Vibration Analysis</h3>
+                    
+                    <div class="circuit-diagram text-center">
+                        <p><strong>Mass-Spring-Damper System</strong></p>
+                        <div class="mb-2">
+                            <span class="circuit-element">Wall</span> — 
+                            <span class="circuit-element">Spring (k)</span> — 
+                            <span class="circuit-element">Mass (m)</span> — 
+                            <span class="circuit-element">Damper (c)</span>
+                        </div>
+                        <p>Displacement: \( x(t) \) from equilibrium</p>
+                    </div>
+                    
+                    <p>The equation of motion for a damped harmonic oscillator:</p>
+                    <div class="math-display">
+                        \( m\frac{d^2x}{dt^2} + c\frac{dx}{dt} + kx = F(t) \)
+                    </div>
+                    <p>where:</p>
+                    <ul>
+                        <li>\( m \) = mass (kg)</li>
+                        <li>\( c \) = damping coefficient (N·s/m)</li>
+                        <li>\( k \) = spring constant (N/m)</li>
+                        <li>\( x \) = displacement from equilibrium (m)</li>
+                        <li>\( F(t) \) = external force (N)</li>
+                    </ul>
+                    
+                    <h4 class="mt-4">Engineering Significance:</h4>
+                    <ul>
+                        <li><strong>Vehicle Suspension:</strong> Design for comfort and stability</li>
+                        <li><strong>Building Design:</strong> Earthquake-resistant structures</li>
+                        <li><strong>Machinery:</strong> Vibration analysis in rotating equipment</li>
+                        <li><strong>Aerospace:</strong> Control surface flutter prevention</li>
+                    </ul>
+                    
+                    <h4 class="mt-4">Damping Ratio (\( \zeta \)) Analysis:</h4>
+                    <div class="root-analysis-grid">
+                        <div class="root-case-card">
+                            <h4 class="root-case-title">Underdamped (\( \zeta < 1 \))</h4>
+                            <p>Oscillatory motion with exponential decay</p>
+                            <div class="math-display">
+                                \( x(t) = e^{-\zeta\omega_n t}[A\cos(\omega_d t) + B\sin(\omega_d t)] \)
+                            </div>
+                            <p>where \( \omega_d = \omega_n\sqrt{1-\zeta^2} \)</p>
+                        </div>
+                        
+                        <div class="root-case-card">
+                            <h4 class="root-case-title">Critically Damped (\( \zeta = 1 \))</h4>
+                            <p>Fastest return to equilibrium without oscillation</p>
+                            <div class="math-display">
+                                \( x(t) = (A + Bt)e^{-\omega_n t} \)
+                            </div>
+                            <p>Optimal for many engineering applications</p>
+                        </div>
+                        
+                        <div class="root-case-card">
+                            <h4 class="root-case-title">Overdamped (\( \zeta > 1 \))</h4>
+                            <p>Slow, non-oscillatory return to equilibrium</p>
+                            <div class="math-display">
+                                \( x(t) = Ae^{r_1 t} + Be^{r_2 t} \)
+                            </div>
+                            <p>where \( r_{1,2} = -\zeta\omega_n \pm \omega_n\sqrt{\zeta^2-1} \)</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="study-card">
+                    <h3 class="study-card-title">Practical Example: Car Suspension Design</h3>
+                    <p><strong>Design Problem:</strong> Design suspension for a car with mass 1000kg per wheel.</p>
+                    <p><strong>Requirements:</strong> Natural frequency 1.5Hz, damping ratio 0.7</p>
+                    <p><strong>Find:</strong> Spring constant \( k \) and damping coefficient \( c \)</p>
+                    
+                    <div class="math-display">
+                        \( \omega_n = 2\pi \times 1.5 = 3\pi \, \text{rad/s} \)
+                    </div>
+                    <div class="math-display">
+                        \( \omega_n = \sqrt{\frac{k}{m}} \Rightarrow k = m\omega_n^2 \)
+                    </div>
+                    <div class="math-display">
+                        \( \zeta = \frac{c}{2\sqrt{km}} \Rightarrow c = 2\zeta\sqrt{km} \)
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Comparison Table -->
+            <div class="card">
+                <h2 class="card-title">Electrical-Mechanical Analogy</h2>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Electrical System</th>
+                            <th>Mechanical System</th>
+                            <th>Relationship</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Voltage \( V \)</td>
+                            <td>Force \( F \)</td>
+                            <td>Driving function</td>
+                        </tr>
+                        <tr>
+                            <td>Current \( i \)</td>
+                            <td>Velocity \( v \)</td>
+                            <td>Rate variable</td>
+                        </tr>
+                        <tr>
+                            <td>Charge \( q \)</td>
+                            <td>Displacement \( x \)</td>
+                            <td>Integral of rate</td>
+                        </tr>
+                        <tr>
+                            <td>Inductance \( L \)</td>
+                            <td>Mass \( m \)</td>
+                            <td>\( L\frac{di}{dt} \) ↔ \( m\frac{dv}{dt} \)</td>
+                        </tr>
+                        <tr>
+                            <td>Resistance \( R \)</td>
+                            <td>Damping \( c \)</td>
+                            <td>\( Ri \) ↔ \( cv \)</td>
+                        </tr>
+                        <tr>
+                            <td>Capacitance \( C \)</td>
+                            <td>Spring \( 1/k \)</td>
+                            <td>\( \frac{1}{C}\int i dt \) ↔ \( kx \)</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="mt-4"><strong>Key Insight:</strong> Both systems are described by identical second-order linear differential equations, allowing solution methods to be transferred between domains.</p>
+            </div>
+        </div>
+        
+        <!-- About Page -->
+            <!-- NEW: Project Developers Section -->
+        <div class="page hidden" id="about-page">    
+            <div class="card">
+                <h2 class="card-title">Project Developers</h2>
+                <p class="mb-4">Student team responsible for developing and maintaining the LDE Learning Portal.</p>
+                
+                <div class="developers-grid">
+                    <div class="developer-card">
+                        <h3 class="developer-name">Soham Sharma</h3>
+                        <div class="developer-roll">PRN: 125B1F009</div>
+                        <div class="developer-branch">Information Technology</div>
+                    </div>
+                    
+                    <div class="developer-card">
+                        <h3 class="developer-name">Ansh Raina</h3>
+                        <div class="developer-roll">PRN: 125B1F007</div>
+                        <div class="developer-branch">Information Technology</div>
+                    </div>
+                    
+                    <div class="developer-card">
+                        <h3 class="developer-name">Mukesh Bhat</h3>
+                        <div class="developer-roll">PRN: 125B1F008</div>
+                        <div class="developer-branch">Information Technology</div>
+                    </div>
+                    
+                    <div class="developer-card">
+                        <h3 class="developer-name">Suhan Tadvi</h3>
+                        <div class="developer-roll">PRN: 125B1F002</div>
+                        <div class="developer-branch">Information Technology</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2 class="card-title">Faculty In-Charge</h2>
+                <p class="mb-4">Guiding professor overseeing the development and academic content of the portal.</p>
+                
+                <div class="faculty-card">
+                    <div class="faculty-photo">NS</div>
+                    <div class="faculty-info">
+                        <h3 class="faculty-name">Dr. Neha Sharma</h3>
+                        <div class="faculty-designation">Assistant Professor</div>
+                        <div class="faculty-department">Department of Applied Sciences & Humanities (AS&H), PCCOE</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        
+        <!-- Feedback Page -->
+        <div class="page hidden" id="feedback-page">
+            <div class="page-header">
+                <h1 class="page-title">Student Feedback</h1>
+                <p class="page-subtitle">Help us improve your LDE learning experience</p>
+            </div>
+            
+            <div class="card">
+                <form class="feedback-form" id="feedbackForm" action="https://formspree.io/f/xojvqenr" method="POST">
+                    <div class="success-message" id="successMessage">
+                        <h3>Thank You!</h3>
+                        <p>Your feedback has been submitted successfully. We appreciate your input!</p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="studentName" class="form-label">Full Name</label>
+                        <input type="text" id="studentName" name="studentName" class="form-input" placeholder="Enter your full name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="rollNumber" class="form-label">Roll Number</label>
+                        <input type="text" id="rollNumber" name="rollNumber" class="form-input" placeholder="Enter your roll number" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="branch" class="form-label">Branch</label>
+                        <select id="branch" name="branch" class="form-input" required>
+                            <option value="">Select your branch</option>
+                            <option value="Computer">Computer Engineering</option>
+                            <option value="IT">Information Technology</option>
+                            <option value="Mechanical">Mechanical Engineering</option>
+                            <option value="Civil">Civil Engineering</option>
+                            <option value="ENTC">Electronics & Telecommunication</option>
+                            <option value="Electrical">Electrical Engineering</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="feedbackType" class="form-label">Feedback Type</label>
+                        <select id="feedbackType" name="feedbackType" class="form-input" required>
+                            <option value="">Select feedback type</option>
+                            <option value="content">Course Content</option>
+                            <option value="platform">Learning Platform</option>
+                            <option value="teaching">Teaching Methodology</option>
+                            <option value="assessment">Assessment Methods</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message" class="form-label">Your Feedback Message</label>
+                        <textarea id="message" name="message" class="form-textarea" placeholder="Please provide your suggestions for improving the LDE course or learning platform..." required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn" id="submitFeedback">Submit Feedback</button>
+                </form>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        // Application state and configuration
+        const AppState = {
+            currentPage: 'home',
+            quizScore: 0,
+            userLevel: 'beginner',
+            currentQuestion: 0,
+            userAnswers: [],
+            quizCompleted: false,
+            darkMode: false
+        };
+        
+        // LDE-specific Quiz Questions (5 questions as requested)
+        const QuizQuestions = [
+            {
+                question: "What is the integrating factor for \\( \\frac{dy}{dx} + 3y = x^2 \\)?",
+                options: [
+                    "\\( e^{3x} \\)",
+                    "\\( e^{x^2} \\)",
+                    "\\( e^{3y} \\)",
+                    "\\( 3e^{x} \\)"
+                ],
+                correct: 0,
+                explanation: "For \\( \\frac{dy}{dx} + P(x)y = Q(x) \\), integrating factor is \\( e^{\\int P(x) dx} \\). Here P(x)=3, so factor is \\( e^{\\int 3 dx} = e^{3x} \\)."
+            },
+            {
+                question: "Which case applies for \\( y'' + 4y' + 4y = 0 \\)?",
+                options: [
+                    "Repeated real roots",
+                    "Distinct real roots",
+                    "Complex conjugate roots",
+                    "No real roots"
+                ],
+                correct: 0,
+                explanation: "Characteristic equation: \\( r^2 + 4r + 4 = 0 \\) ⇒ \\( (r+2)^2 = 0 \\) ⇒ \\( r = -2, -2 \\) (repeated real roots)."
+            },
+            {
+                question: "The general solution for \\( y'' + 9y = 0 \\) is:",
+                options: [
+                    "\\( y = C_1 \\cos(3x) + C_2 \\sin(3x) \\)",
+                    "\\( y = C_1 e^{3x} + C_2 e^{-3x} \\)",
+                    "\\( y = (C_1 + C_2 x)e^{3x} \\)",
+                    "\\( y = C_1 \\cosh(3x) + C_2 \\sinh(3x) \\)"
+                ],
+                correct: 0,
+                explanation: "Characteristic: \\( r^2 + 9 = 0 \\) ⇒ \\( r = \\pm 3i \\). For complex roots \\( r = \\alpha \\pm i\\beta \\), solution is \\( y = e^{\\alpha x}[C_1 \\cos(\\beta x) + C_2 \\sin(\\beta x)] \\). Here \\( \\alpha=0, \\beta=3 \\), so \\( y = C_1 \\cos(3x) + C_2 \\sin(3x) \\)."
+            },
+            {
+                question: "For the equation \\( y'' - 2y' + y = e^{x} \\), what form should we try for particular solution?",
+                options: [
+                    "\\( Ax^2 e^{x} \\)",
+                    "\\( Ae^{x} \\)",
+                    "\\( (A + Bx)e^{x} \\)",
+                    "\\( A\\cos(x) + B\\sin(x) \\)"
+                ],
+                correct: 0,
+                explanation: "Since \\( e^{x} \\) is already in the complementary solution (characteristic roots: r=1,1), we multiply by \\( x^2 \\) for the particular solution trial: \\( y_p = Ax^2 e^{x} \\)."
+            },
+            {
+                question: "In an RLC circuit, what does the damping case depend on?",
+                options: [
+                    "Comparison of \\( R^2 \\) and \\( 4L/C \\)",
+                    "Value of inductance L only",
+                    "Value of capacitance C only",
+                    "The voltage source frequency"
+                ],
+                correct: 0,
+                explanation: "The damping in an RLC circuit depends on the relationship: \\( R^2 \\) compared to \\( 4L/C \\). Overdamped if \\( R^2 > 4L/C \\), critically damped if \\( R^2 = 4L/C \\), underdamped if \\( R^2 < 4L/C \\)."
+            }
+        ];
+        
+        // Learning paths based on quiz scores
+        const LearningPaths = {
+            beginner: {
+                title: "Beginner Path (Score: 0-2)",
+                level: "Beginner",
+                description: "Focus on foundational concepts and basic problem-solving",
+                weeks: [
+                    {
+                        title: "Week 1: Review of Calculus & First-Order LDEs",
+                        topics: [
+                            "Review differentiation and integration techniques",
+                            "Understand standard form: dy/dx + P(x)y = Q(x)",
+                            "Learn integrating factor method step-by-step",
+                            "Practice with simple first-order LDEs",
+                            "Solve initial value problems"
+                        ]
+                    },
+                    {
+                        title: "Week 2: Second-Order Homogeneous LDEs",
+                        topics: [
+                            "Learn characteristic equation method",
+                            "Understand three root cases: real distinct, repeated, complex",
+                            "Practice solving homogeneous equations",
+                            "Work with initial conditions",
+                            "Build confidence with step-by-step solutions"
+                        ]
+                    },
+                    {
+                        title: "Week 3: Applications and Problem Solving",
+                        topics: [
+                            "Solve simple RLC circuit problems",
+                            "Understand mass-spring-damper basics",
+                            "Practice with mixed problem types",
+                            "Review all solution methods",
+                            "Build problem-solving speed and accuracy"
+                        ]
+                    }
+                ]
+            },
+            intermediate: {
+                title: "Intermediate Path (Score: 3-4)",
+                level: "Intermediate",
+                description: "Master core concepts and application techniques",
+                weeks: [
+                    {
+                        title: "Week 1: Advanced Solution Methods",
+                        topics: [
+                            "Method of undetermined coefficients",
+                            "Variation of parameters",
+                            "Non-homogeneous equations with various forcing functions",
+                            "Superposition principle applications",
+                            "Complex problem-solving strategies"
+                        ]
+                    },
+                    {
+                        title: "Week 2: Engineering Applications",
+                        topics: [
+                            "Detailed RLC circuit analysis",
+                            "Mass-spring-damper system design",
+                            "Damping ratio calculations",
+                            "Natural frequency determination",
+                            "Real-world case studies"
+                        ]
+                    },
+                    {
+                        title: "Week 3: Advanced Problem Solving",
+                        topics: [
+                            "Mixed type differential equations",
+                            "Boundary value problems",
+                            "System modeling exercises",
+                            "Optimization in engineering design",
+                            "Preparation for advanced courses"
+                        ]
+                    }
+                ]
+            },
+            advanced: {
+                title: "Advanced Path (Score: 5)",
+                level: "Advanced",
+                description: "Explore advanced applications and problem-solving strategies",
+                weeks: [
+                    {
+                        title: "Week 1: System Modeling and Analysis",
+                        topics: [
+                            "Multi-degree of freedom systems",
+                            "Coupled differential equations",
+                            "Matrix methods for systems",
+                            "Eigenvalue problems in vibrations",
+                            "Computer-aided solutions"
+                        ]
+                    },
+                    {
+                        title: "Week 2: Advanced Engineering Applications",
+                        topics: [
+                            "Control system design",
+                            "Filter design in signal processing",
+                            "Structural vibration analysis",
+                            "Aerodynamic flutter prevention",
+                            "Research-oriented problems"
+                        ]
+                    },
+                    {
+                        title: "Week 3: Research and Innovation",
+                        topics: [
+                            "Literature review on LDE applications",
+                            "Research problem formulation",
+                            "Mathematical modeling projects",
+                            "Simulation and validation",
+                            "Paper writing and presentation"
+                        ]
+                    }
+                ]
+            }
+        };
+        
+        // Initialize the application
+        function initApp() {
+            // Load saved state from localStorage
+            loadState();
+            
+            // Set up event listeners
+            setupNavigation();
+            setupQuiz();
+            setupMobileMenu();
+            setupFeedbackForm();
+            setupPracticeHints();
+            
+            // Render the current page
+            renderPage(AppState.currentPage);
+            
+            // Update the user level display
+            updateUserLevelDisplay();
+            
+            // Trigger initial MathJax rendering
+            if (window.MathJax) {
+                window.MathJax.typesetPromise().then(() => {
+                    console.log('MathJax initial rendering complete');
+                });
+            }
+        }
+        
+        // Load application state from localStorage
+        function loadState() {
+            const savedScore = localStorage.getItem('lde_quiz_score');
+            const savedLevel = localStorage.getItem('lde_user_level');
+            const savedPage = localStorage.getItem('lde_current_page');
+            
+            if (savedScore) AppState.quizScore = parseInt(savedScore);
+            if (savedLevel) AppState.userLevel = savedLevel;
+            if (savedPage) AppState.currentPage = savedPage;
+            
+            // Determine user level based on score
+            if (AppState.quizScore >= 0 && AppState.quizScore <= 2) {
+                AppState.userLevel = 'beginner';
+            } else if (AppState.quizScore >= 3 && AppState.quizScore <= 4) {
+                AppState.userLevel = 'intermediate';
+            } else if (AppState.quizScore === 5) {
+                AppState.userLevel = 'advanced';
+            }
+        }
+        
+        // Save application state to localStorage
+        function saveState() {
+            localStorage.setItem('lde_quiz_score', AppState.quizScore);
+            localStorage.setItem('lde_user_level', AppState.userLevel);
+            localStorage.setItem('lde_current_page', AppState.currentPage);
+        }
+        
+        // Set up navigation between pages
+        function setupNavigation() {
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Get the page from data attribute
+                    const page = this.getAttribute('data-page');
+                    
+                    // Update active link
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Render the new page
+                    renderPage(page);
+                    
+                    // Close mobile menu if open
+                    const sidebar = document.getElementById('sidebar');
+                    sidebar.classList.remove('open');
+                });
+            });
+        }
+        
+        // Set up mobile hamburger menu
+        function setupMobileMenu() {
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const sidebar = document.getElementById('sidebar');
+            
+            if (hamburgerBtn) {
+                hamburgerBtn.addEventListener('click', function() {
+                    sidebar.classList.toggle('open');
+                });
+            }
+            
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', function(e) {
+                const isMobile = window.innerWidth <= 768;
+                if (isMobile && !sidebar.contains(e.target) && !hamburgerBtn.contains(e.target)) {
+                    sidebar.classList.remove('open');
+                }
+            });
+        }
+        
+        // Set up practice question hints
+        function setupPracticeHints() {
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('hint-btn')) {
+                    const hintId = e.target.getAttribute('data-hint');
+                    const hintBox = document.getElementById(`hint-${hintId}`);
+                    
+                    if (hintBox.classList.contains('show')) {
+                        hintBox.classList.remove('show');
+                        e.target.textContent = 'Show Hint';
+                    } else {
+                        hintBox.classList.add('show');
+                        e.target.textContent = 'Hide Hint';
+                    }
+                }
+            });
+        }
+        
+        // Set up feedback form
+        function setupFeedbackForm() {
+            const feedbackForm = document.getElementById('feedbackForm');
+            const successMessage = document.getElementById('successMessage');
+            
+            if (feedbackForm) {
+                feedbackForm.addEventListener('submit', function(e) {
+                    e.preventDefault(); // Prevent default form submission
+                    
+                    const formData = new FormData(this);
+                    
+                    // Validate required fields
+                    const name = document.getElementById('studentName').value.trim();
+                    const rollNo = document.getElementById('rollNumber').value.trim();
+                    const message = document.getElementById('message').value.trim();
+                    
+                    if (!name || !rollNo || !message) {
+                        alert('Please fill in all required fields: Name, Roll Number, and Feedback Message.');
+                        return;
+                    }
+                    
+                    // Show success message immediately
+                    successMessage.classList.add('show');
+                    
+                    // Submit form data to Formspree
+                    fetch(this.action, {
+                        method: this.method,
+                        body: formData,
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            // Clear the form
+                            this.reset();
+                            
+                            // Hide success message after 5 seconds
+                            setTimeout(() => {
+                                successMessage.classList.remove('show');
+                            }, 5000);
+                            
+                            console.log('Feedback submitted successfully to Formspree');
+                        } else {
+                            throw new Error('Form submission failed');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error submitting feedback:', error);
+                        alert('There was an error submitting your feedback. Please try again.');
+                        successMessage.classList.remove('show');
+                    });
+                });
+            }
+        }
+        
+        // Set up quiz functionality
+        function setupQuiz() {
+            // Set up quiz navigation buttons
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const retakeBtn = document.getElementById('retakeBtn');
+            
+            if (prevBtn) prevBtn.addEventListener('click', showPreviousQuestion);
+            if (nextBtn) nextBtn.addEventListener('click', showNextQuestion);
+            if (retakeBtn) retakeBtn.addEventListener('click', resetQuiz);
+            
+            // Initialize the quiz
+            renderQuizQuestion();
+        }
+        
+        // Render the current page based on page ID
+        function renderPage(pageId) {
+            // Update state
+            AppState.currentPage = pageId;
+            saveState();
+            
+            // Hide all pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.add('hidden'));
+            
+            // Show the requested page
+            const targetPage = document.getElementById(`${pageId}-page`);
+            if (targetPage) {
+                targetPage.classList.remove('hidden');
+                
+                // If it's the quiz page and quiz is completed, show results
+                if (pageId === 'quiz' && AppState.quizCompleted) {
+                    showQuizResults();
+                }
+            }
+            
+            // Trigger MathJax to render equations on the new page
+            if (window.MathJax && window.MathJax.typesetPromise) {
+                MathJax.typesetPromise().then(() => {
+                    console.log(`MathJax rendered for ${pageId} page`);
+                }).catch((err) => {
+                    console.log('MathJax error:', err);
+                });
+            }
+        }
+        
+        // Render the current quiz question
+        function renderQuizQuestion() {
+            const questionData = QuizQuestions[AppState.currentQuestion];
+            const quizContent = document.getElementById('quizContent');
+            
+            if (!questionData) return;
+            
+            // Update progress indicators
+            document.getElementById('progressText').textContent = `Question ${AppState.currentQuestion + 1} of ${QuizQuestions.length}`;
+            document.getElementById('quizProgress').style.width = `${((AppState.currentQuestion) / QuizQuestions.length) * 100}%`;
+            
+            // Build question HTML
+            let optionsHTML = '';
+            questionData.options.forEach((option, index) => {
+                const isSelected = AppState.userAnswers[AppState.currentQuestion] === index;
+                const isCorrect = index === questionData.correct;
+                const isIncorrect = AppState.userAnswers[AppState.currentQuestion] !== undefined && 
+                                   AppState.userAnswers[AppState.currentQuestion] === index && 
+                                   index !== questionData.correct;
+                
+                let optionClass = 'option';
+                if (isSelected) optionClass += ' selected';
+                if (AppState.quizCompleted && isCorrect) optionClass += ' correct';
+                if (isIncorrect) optionClass += ' incorrect';
+                
+                optionsHTML += `
+                    <div class="${optionClass}" data-index="${index}">
+                        ${option}
+                    </div>
+                `;
+            });
+            
+            // Determine if explanation should be shown
+            const explanationClass = AppState.userAnswers[AppState.currentQuestion] !== undefined ? 'show' : '';
+            
+            quizContent.innerHTML = `
+                <div class="question-text">${questionData.question}</div>
+                <div class="options-container" id="optionsContainer">
+                    ${optionsHTML}
+                </div>
+                <div class="explanation-box ${explanationClass}" id="explanationBox">
+                    <div class="explanation-title">Explanation:</div>
+                    <p>${questionData.explanation}</p>
+                </div>
+            `;
+            
+            // Set up option selection
+            document.querySelectorAll('.option').forEach(option => {
+                option.addEventListener('click', function() {
+                    if (AppState.quizCompleted) return;
+                    
+                    const selectedIndex = parseInt(this.getAttribute('data-index'));
+                    selectOption(selectedIndex);
+                });
+            });
+            
+            // Update navigation buttons
+            document.getElementById('prevBtn').disabled = AppState.currentQuestion === 0;
+            
+            if (AppState.currentQuestion === QuizQuestions.length - 1) {
+                document.getElementById('nextBtn').textContent = 'Submit';
+            } else {
+                document.getElementById('nextBtn').textContent = 'Next';
+            }
+            
+            // If this is the last question and all are answered, change button to "View Results"
+            const allAnswered = AppState.userAnswers.filter(a => a !== undefined).length === QuizQuestions.length;
+            if (AppState.currentQuestion === QuizQuestions.length - 1 && allAnswered) {
+                document.getElementById('nextBtn').textContent = 'View Results';
+            }
+            
+            // Trigger MathJax to render equations - FIXED
+            if (window.MathJax && window.MathJax.typesetPromise) {
+                MathJax.typesetPromise().then(() => {
+                    console.log('MathJax rendered quiz question');
+                }).catch((err) => {
+                    console.log('MathJax error:', err);
+                });
+            }
+        }
+        
+        // Handle option selection in quiz
+        function selectOption(optionIndex) {
+            // Save the answer
+            AppState.userAnswers[AppState.currentQuestion] = optionIndex;
+            
+            // Update UI to show selected option
+            document.querySelectorAll('.option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            document.querySelector(`.option[data-index="${optionIndex}"]`).classList.add('selected');
+            
+            // Show explanation
+            document.getElementById('explanationBox').classList.add('show');
+            
+            // If this is the last question, update button text
+            if (AppState.currentQuestion === QuizQuestions.length - 1) {
+                document.getElementById('nextBtn').textContent = 'View Results';
+            }
+
+            // Re-render MathJax to ensure explanation equations are displayed - ADDED
+            if (window.MathJax && window.MathJax.typesetPromise) {
+                MathJax.typesetPromise();
+            }
+        }
+        
+        // Show the next quiz question
+        function showNextQuestion() {
+            // If on last question and all are answered, show results
+            const allAnswered = AppState.userAnswers.filter(a => a !== undefined).length === QuizQuestions.length;
+            
+            if (AppState.currentQuestion === QuizQuestions.length - 1 && allAnswered) {
+                calculateQuizScore();
+                showQuizResults();
+                return;
+            }
+            
+            // Otherwise, go to next question
+            if (AppState.currentQuestion < QuizQuestions.length - 1) {
+                AppState.currentQuestion++;
+                renderQuizQuestion();
+            }
+        }
+        
+        // Show the previous quiz question
+        function showPreviousQuestion() {
+            if (AppState.currentQuestion > 0) {
+                AppState.currentQuestion--;
+                renderQuizQuestion();
+            }
+        }
+        
+        // Calculate the quiz score
+        function calculateQuizScore() {
+            let score = 0;
+            
+            QuizQuestions.forEach((question, index) => {
+                if (AppState.userAnswers[index] === question.correct) {
+                    score++;
+                }
+            });
+            
+            AppState.quizScore = score;
+            AppState.quizCompleted = true;
+            
+            // Determine user level based on score
+            if (score >= 0 && score <= 2) {
+                AppState.userLevel = 'beginner';
+            } else if (score >= 3 && score <= 4) {
+                AppState.userLevel = 'intermediate';
+            } else if (score === 5) {
+                AppState.userLevel = 'advanced';
+            }
+            
+            // Save state
+            saveState();
+            
+            // Update user level display
+            updateUserLevelDisplay();
+            
+            return score;
+        }
+        
+        // Show quiz results
+        function showQuizResults() {
+            // Hide quiz interface
+            document.getElementById('quizContent').classList.add('hidden');
+            document.querySelector('.quiz-controls').classList.add('hidden');
+            document.querySelector('.quiz-header').classList.add('hidden');
+            document.querySelector('.progress-bar').classList.add('hidden');
+            
+            // Show results container
+            document.getElementById('resultsContainer').classList.remove('hidden');
+            
+            // Calculate score if not already done
+            if (!AppState.quizCompleted) {
+                calculateQuizScore();
+            }
+            
+            // Update results display
+            document.getElementById('scoreValue').textContent = AppState.quizScore;
+            document.getElementById('progressText').textContent = `Quiz Completed`;
+            document.getElementById('quizProgress').style.width = '100%';
+            
+            // Set result title and description based on score
+            let resultTitle = '';
+            let resultDescription = '';
+            
+            if (AppState.quizScore <= 2) {
+                resultTitle = 'Your Level: Beginner';
+                resultDescription = 'Focus on foundational concepts of differential equations. Review integrating factor method and characteristic equations.';
+            } else if (AppState.quizScore <= 4) {
+                resultTitle = 'Your Level: Intermediate';
+                resultDescription = 'You have a good grasp of core concepts. Focus on applications and advanced problem-solving techniques.';
+            } else {
+                resultTitle = 'Your Level: Advanced';
+                resultDescription = 'Excellent understanding. Explore advanced applications and complex problem-solving strategies.';
+            }
+            
+            document.getElementById('resultTitle').textContent = resultTitle;
+            document.getElementById('resultDescription').textContent = resultDescription;
+            
+            // Update score circle color based on score
+            const scoreCircle = document.getElementById('scoreCircle');
+            if (AppState.quizScore <= 2) {
+                scoreCircle.style.background = 'linear-gradient(135deg, var(--blue) 0%, var(--blue-light) 100%)';
+            } else if (AppState.quizScore <= 4) {
+                scoreCircle.style.background = 'linear-gradient(135deg, var(--green) 0%, var(--green-light) 100%)';
+            } else {
+                scoreCircle.style.background = 'linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%)';
+            }
+            
+            // Generate learning path
+            generateLearningPath();
+
+            // Re-render MathJax for results page - ADDED
+            if (window.MathJax && window.MathJax.typesetPromise) {
+                MathJax.typesetPromise();
+            }
+        }
+        
+        // Generate learning path based on score
+        function generateLearningPath() {
+            const pathData = LearningPaths[AppState.userLevel];
+            const pathContainer = document.getElementById('pathRecommendation');
+            
+            if (!pathData || !pathContainer) return;
+            
+            let pathHTML = `
+                <h4 class="font-bold mb-2">${pathData.title}</h4>
+                <p class="mb-4">${pathData.description}</p>
+                <div class="week-plan">
+            `;
+            
+            // Add each week's plan
+            pathData.weeks.forEach((week, index) => {
+                pathHTML += `
+                    <div class="mt-4 mb-6">
+                        <h4 class="font-bold text-blue mb-2">${week.title}</h4>
+                        <ul class="week-topics" style="list-style-type: disc; padding-left: 1.5rem;">
+                `;
+                
+                week.topics.forEach(topic => {
+                    pathHTML += `<li class="mb-1">${topic}</li>`;
+                });
+                
+                pathHTML += `
+                        </ul>
+                    </div>
+                `;
+            });
+            
+            pathHTML += `</div>`;
+            
+            pathContainer.innerHTML = pathHTML;
+
+            // Re-render MathJax 
+            if (window.MathJax && window.MathJax.typesetPromise) {
+                MathJax.typesetPromise();
+            }
+        }
+        
+        // Reset the quiz
+        function resetQuiz() {
+            AppState.currentQuestion = 0;
+            AppState.userAnswers = [];
+            AppState.quizCompleted = false;
+            
+            // Hide results container
+            document.getElementById('resultsContainer').classList.add('hidden');
+            
+            // Show quiz interface
+            document.getElementById('quizContent').classList.remove('hidden');
+            document.querySelector('.quiz-controls').classList.remove('hidden');
+            document.querySelector('.quiz-header').classList.remove('hidden');
+            document.querySelector('.progress-bar').classList.remove('hidden');
+            
+            // Reset UI
+            renderQuizQuestion();
+
+            // Re-render MathJax 
+            if (window.MathJax && window.MathJax.typesetPromise) {
+                MathJax.typesetPromise();
+            }
+        }
+        
+        // Update the user level display in the sidebar
+        function updateUserLevelDisplay() {
+            const userLevelElement = document.getElementById('userLevel');
+            if (userLevelElement) {
+                userLevelElement.textContent = AppState.userLevel.charAt(0).toUpperCase() + AppState.userLevel.slice(1);
+                
+                // Update color based on level
+                if (AppState.userLevel === 'beginner') {
+                    userLevelElement.style.backgroundColor = '#3b82f6';
+                } else if (AppState.userLevel === 'intermediate') {
+                    userLevelElement.style.backgroundColor = '#10b981';
+                } else {
+                    userLevelElement.style.backgroundColor = '#8b5cf6';
+                }
+            }
+        }
+        
+        // Initialize the application when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initApp);
+        
+        // Handle window resize for responsive behavior
+        window.addEventListener('resize', function() {
+            // Close sidebar on mobile when resizing to desktop
+            if (window.innerWidth > 768) {
+                const sidebar = document.getElementById('sidebar');
+                sidebar.classList.remove('open');
+            }
+        });
+    </script>
+</body>
+</html>
