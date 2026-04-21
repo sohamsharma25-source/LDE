@@ -928,6 +928,46 @@
                     </div>
                 </div>
             </div>
+
+            <div class="card">
+                <h2 class="card-title">First-Order Linear Differential Calculator</h2>
+
+                <div class="study-card">
+                    <h3 class="study-card-title">Solve \( \frac{dy}{dx} + Py = Q \) with Steps</h3>
+                    <p>Enter constants \( P \) and \( Q \) for a first-order linear differential equation.</p>
+                    <p>You can also enter an initial condition \( y(x_0) = y_0 \) to get a specific solution.</p>
+
+                    <div class="input-group mt-4">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
+                            <div>
+                                <label for="ldeP" class="form-label">\( P \)</label>
+                                <input type="number" id="ldeP" class="form-input" step="0.1" value="2">
+                            </div>
+                            <div>
+                                <label for="ldeQ" class="form-label">\( Q \)</label>
+                                <input type="number" id="ldeQ" class="form-input" step="0.1" value="6">
+                            </div>
+                            <div>
+                                <label for="ldeX0" class="form-label">\( x_0 \) (optional)</label>
+                                <input type="number" id="ldeX0" class="form-input" step="0.1" placeholder="e.g. 0">
+                            </div>
+                            <div>
+                                <label for="ldeY0" class="form-label">\( y_0 \) (optional)</label>
+                                <input type="number" id="ldeY0" class="form-input" step="0.1" placeholder="e.g. 3">
+                            </div>
+                        </div>
+
+                        <button class="submit-btn" id="calculateLDE" style="margin-top: 1rem;">Solve with Steps</button>
+                    </div>
+
+                    <div class="result-container mt-4" id="ldeResult" style="display: none;">
+                        <h4 class="mb-2" style="color: var(--green);">Step-by-Step Solution:</h4>
+                        <div id="ldeSteps"></div>
+                        <div class="math-display mt-2" id="ldeGeneralSolution"></div>
+                        <div class="math-display mt-2" id="ldeParticularSolution"></div>
+                    </div>
+                </div>
+            </div>
             
             <!-- Comparison Table -->
             <div class="card">

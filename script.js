@@ -223,6 +223,11 @@ const AppState = {
             if (calculateMSDBtn) {
                 calculateMSDBtn.addEventListener('click', calculateMassSpringDamper);
             }
+
+            const calculateLDEBtn = document.getElementById('calculateLDE');
+            if (calculateLDEBtn) {
+                calculateLDEBtn.addEventListener('click', calculateFirstOrderLDE);
+            }
         }
         
         // RLC Circuit Calculation Function
@@ -372,6 +377,83 @@ const AppState = {
             if (window.MathJax && window.MathJax.typesetPromise) {
                 MathJax.typesetPromise().then(() => {
                     console.log('Mass-Spring-Damper MathJax rendered');
+                });
+            }
+        }
+
+        function calculateFirstOrderLDE() {
+            const P = parseFloat(document.getElementById('ldeP').value);
+            const Q = parseFloat(document.getElementById('ldeQ').value);
+            const x0Raw = document.getElementById('ldeX0').value.trim();
+            const y0Raw = document.getElementById('ldeY0').value.trim();
+
+            if (isNaN(P) || isNaN(Q)) {
+                alert('Please enter valid numeric values for P and Q.');
+                return;
+            }
+
+            const hasX0 = x0Raw !== '';
+            const hasY0 = y0Raw !== '';
+
+            if ((hasX0 && !hasY0) || (!hasX0 && hasY0)) {
+                alert('Please provide both x0 and y0 for the initial condition, or leave both empty.');
+                return;
+            }
+
+            const x0 = hasX0 ? parseFloat(x0Raw) : null;
+            const y0 = hasY0 ? parseFloat(y0Raw) : null;
+            if ((hasX0 && isNaN(x0)) || (hasY0 && isNaN(y0))) {
+                alert('Please enter valid numeric values for x0 and y0.');
+                return;
+            }
+
+            const resultContainer = document.getElementById('ldeResult');
+            const stepsEl = document.getElementById('ldeSteps');
+            const generalEl = document.getElementById('ldeGeneralSolution');
+            const particularEl = document.getElementById('ldeParticularSolution');
+
+            const steps = [];
+            steps.push(`\\[\\text{Given equation: } \\frac{dy}{dx} + (${P})y = ${Q}\\]`);
+            steps.push(`\\[\\text{Step 1: } P(x) = ${P},\\; Q(x) = ${Q}\\]`);
+
+            if (Math.abs(P) < 1e-10) {
+                steps.push('\\[\\text{Step 2: } \\mu(x)=e^{\\int 0\\,dx}=1\\]');
+                steps.push(`\\[\\text{Step 3: Equation becomes } \\frac{dy}{dx} = ${Q}\\]`);
+                steps.push(`\\[\\text{Step 4: Integrate both sides } \\Rightarrow y = ${Q}x + C\\]`);
+
+                generalEl.innerHTML = `\\[\\text{General Solution: } y = ${Q}x + C\\]`;
+
+                if (hasX0 && hasY0) {
+                    const C = y0 - Q * x0;
+                    particularEl.innerHTML = `\\[\\text{Using } y(${x0})=${y0}:\\; C=${C.toFixed(4)}\\;\\Rightarrow\\; y=${Q}x + ${C.toFixed(4)}\\]`;
+                } else {
+                    particularEl.innerHTML = '\\[\\text{No initial condition given, so } C \\text{ remains arbitrary.}\\]';
+                }
+            } else {
+                steps.push(`\\[\\text{Step 2: Integrating factor } \\mu(x)=e^{\\int ${P}\\,dx}=e^{${P}x}\\]`);
+                steps.push(`\\[\\text{Step 3: Multiply through } \\Rightarrow e^{${P}x}\\frac{dy}{dx} + ${P}e^{${P}x}y = ${Q}e^{${P}x}\\]`);
+                steps.push(`\\[\\text{Step 4: Left side is } \\frac{d}{dx}\\left(e^{${P}x}y\\right),\\; \\text{so}\\; \\frac{d}{dx}\\left(e^{${P}x}y\\right)= ${Q}e^{${P}x}\\]`);
+                steps.push(`\\[\\text{Step 5: Integrate } \\Rightarrow e^{${P}x}y = \\frac{${Q}}{${P}}e^{${P}x} + C\\]`);
+                steps.push(`\\[\\text{Step 6: Divide by } e^{${P}x} \\Rightarrow y = \\frac{${Q}}{${P}} + Ce^{-${P}x}\\]`);
+
+                const qp = Q / P;
+                generalEl.innerHTML = `\\[\\text{General Solution: } y = ${qp.toFixed(4)} + Ce^{-${P}x}\\]`;
+
+                if (hasX0 && hasY0) {
+                    const C = (y0 - qp) * Math.exp(P * x0);
+                    particularEl.innerHTML = `\\[\\text{Using } y(${x0})=${y0}:\\; C = \\left(${y0} - ${qp.toFixed(4)}\\right)e^{${P}\\cdot ${x0}} = ${C.toFixed(4)}\\]` +
+                        `\\[\\text{Particular Solution: } y = ${qp.toFixed(4)} + ${C.toFixed(4)}e^{-${P}x}\\]`;
+                } else {
+                    particularEl.innerHTML = '\\[\\text{No initial condition given, so } C \\text{ remains arbitrary.}\\]';
+                }
+            }
+
+            stepsEl.innerHTML = steps.map(step => `<div class="math-display mt-2">${step}</div>`).join('');
+            resultContainer.style.display = 'block';
+
+            if (window.MathJax && window.MathJax.typesetPromise) {
+                MathJax.typesetPromise().then(() => {
+                    console.log('First-order LDE MathJax rendered');
                 });
             }
         }
