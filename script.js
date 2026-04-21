@@ -382,13 +382,15 @@ const AppState = {
         }
 
         function calculateFirstOrderLDE() {
-            const P = parseFloat(document.getElementById('ldeP').value);
-            const Q = parseFloat(document.getElementById('ldeQ').value);
+            const a = parseFloat(document.getElementById('ldeA').value);
+            const b = parseFloat(document.getElementById('ldeB').value);
+            const fExpression = document.getElementById('ldeF').value.trim();
             const x0Raw = document.getElementById('ldeX0').value.trim();
             const y0Raw = document.getElementById('ldeY0').value.trim();
+            const xEvalRaw = document.getElementById('ldeXEval').value.trim();
 
-            if (isNaN(P) || isNaN(Q)) {
-                alert('Please enter valid numeric values for P and Q.');
+            if (isNaN(a) || isNaN(b) || !fExpression) {
+                alert('Please enter valid values for a, b, and f(x).');
                 return;
             }
 
@@ -402,8 +404,14 @@ const AppState = {
 
             const x0 = hasX0 ? parseFloat(x0Raw) : null;
             const y0 = hasY0 ? parseFloat(y0Raw) : null;
+            const hasXEval = xEvalRaw !== '';
+            const xEval = hasXEval ? parseFloat(xEvalRaw) : null;
             if ((hasX0 && isNaN(x0)) || (hasY0 && isNaN(y0))) {
                 alert('Please enter valid numeric values for x0 and y0.');
+                return;
+            }
+            if (hasXEval && isNaN(xEval)) {
+                alert('Please enter a valid numeric value for evaluation x.');
                 return;
             }
 
@@ -411,41 +419,58 @@ const AppState = {
             const stepsEl = document.getElementById('ldeSteps');
             const generalEl = document.getElementById('ldeGeneralSolution');
             const particularEl = document.getElementById('ldeParticularSolution');
+            const numericEl = document.getElementById('ldeNumericValue');
+
+            const A = (x) => 0.5 * a * x * x + b * x;
+            const mu = (x) => Math.exp(A(x));
+
+            const safeExpression = fExpression
+                .replace(/\^/g, '**')
+                .replace(/\bexp\(/g, 'Math.exp(')
+                .replace(/\bsin\(/g, 'Math.sin(')
+                .replace(/\bcos\(/g, 'Math.cos(')
+                .replace(/\btan\(/g, 'Math.tan(')
+                .replace(/\blog\(/g, 'Math.log(')
+                .replace(/\bsqrt\(/g, 'Math.sqrt(')
+                .replace(/\bpi\b/gi, 'Math.PI');
+
+            let f;
+            try {
+                f = new Function('x', `return ${safeExpression};`);
+                const testValue = f(0);
+                if (!Number.isFinite(testValue)) {
+                    throw new Error('Invalid function output');
+                }
+            } catch (error) {
+                alert('Invalid f(x). Use expressions like x^2 + 1, sin(x), exp(2*x).');
+                return;
+            }
 
             const steps = [];
-            steps.push(`\\[\\text{Given equation: } \\frac{dy}{dx} + (${P})y = ${Q}\\]`);
-            steps.push(`\\[\\text{Step 1: } P(x) = ${P},\\; Q(x) = ${Q}\\]`);
+            steps.push(`\\[\\text{Given equation: } \\frac{dy}{dx} + (${a}x + ${b})y = ${fExpression}\\]`);
+            steps.push(`\\[\\text{Step 1: } P(x)=${a}x+${b},\\quad Q(x)=${fExpression}\\]`);
+            steps.push(`\\[\\text{Step 2: } \\mu(x)=e^{\\int P(x)dx}=e^{\\int (${a}x+${b})dx}=e^{\\frac{${a}}{2}x^2+${b}x}\\]`);
+            steps.push(`\\[\\text{Step 3: } \\frac{d}{dx}[\\mu(x)y]=\\mu(x)f(x)\\]`);
+            steps.push('\\[\\text{Step 4: Integrate both sides}\\]');
+            steps.push(`\\[\\mu(x)y = \\int e^{\\frac{${a}}{2}x^2+${b}x}\\,f(x)\\,dx + C\\]`);
+            steps.push(`\\[\\text{Step 5: } y(x)=e^{-\\left(\\frac{${a}}{2}x^2+${b}x\\right)}\\left[\\int e^{\\frac{${a}}{2}x^2+${b}x}f(x)\\,dx + C\\right]\\]`);
 
-            if (Math.abs(P) < 1e-10) {
-                steps.push('\\[\\text{Step 2: } \\mu(x)=e^{\\int 0\\,dx}=1\\]');
-                steps.push(`\\[\\text{Step 3: Equation becomes } \\frac{dy}{dx} = ${Q}\\]`);
-                steps.push(`\\[\\text{Step 4: Integrate both sides } \\Rightarrow y = ${Q}x + C\\]`);
+            generalEl.innerHTML = `\\[\\text{General solution (integral form): } y(x)=e^{-\\left(\\frac{${a}}{2}x^2+${b}x\\right)}\\left[\\int e^{\\frac{${a}}{2}x^2+${b}x}f(x)\\,dx + C\\right]\\]`;
 
-                generalEl.innerHTML = `\\[\\text{General Solution: } y = ${Q}x + C\\]`;
-
-                if (hasX0 && hasY0) {
-                    const C = y0 - Q * x0;
-                    particularEl.innerHTML = `\\[\\text{Using } y(${x0})=${y0}:\\; C=${C.toFixed(4)}\\;\\Rightarrow\\; y=${Q}x + ${C.toFixed(4)}\\]`;
-                } else {
-                    particularEl.innerHTML = '\\[\\text{No initial condition given, so } C \\text{ remains arbitrary.}\\]';
-                }
+            if (hasX0 && hasY0) {
+                particularEl.innerHTML = `\\[\\text{Using } y(${x0})=${y0}:\\quad y(x)=e^{-A(x)}\\left[y_0e^{A(x_0)}+\\int_{${x0}}^{x}e^{A(t)}f(t)\\,dt\\right],\\; A(u)=\\frac{${a}}{2}u^2+${b}u\\]`;
             } else {
-                steps.push(`\\[\\text{Step 2: Integrating factor } \\mu(x)=e^{\\int ${P}\\,dx}=e^{${P}x}\\]`);
-                steps.push(`\\[\\text{Step 3: Multiply through } \\Rightarrow e^{${P}x}\\frac{dy}{dx} + ${P}e^{${P}x}y = ${Q}e^{${P}x}\\]`);
-                steps.push(`\\[\\text{Step 4: Left side is } \\frac{d}{dx}\\left(e^{${P}x}y\\right),\\; \\text{so}\\; \\frac{d}{dx}\\left(e^{${P}x}y\\right)= ${Q}e^{${P}x}\\]`);
-                steps.push(`\\[\\text{Step 5: Integrate } \\Rightarrow e^{${P}x}y = \\frac{${Q}}{${P}}e^{${P}x} + C\\]`);
-                steps.push(`\\[\\text{Step 6: Divide by } e^{${P}x} \\Rightarrow y = \\frac{${Q}}{${P}} + Ce^{-${P}x}\\]`);
+                particularEl.innerHTML = '\\[\\text{No initial condition given, so the answer remains as general solution.}\\]';
+            }
 
-                const qp = Q / P;
-                generalEl.innerHTML = `\\[\\text{General Solution: } y = ${qp.toFixed(4)} + Ce^{-${P}x}\\]`;
-
-                if (hasX0 && hasY0) {
-                    const C = (y0 - qp) * Math.exp(P * x0);
-                    particularEl.innerHTML = `\\[\\text{Using } y(${x0})=${y0}:\\; C = \\left(${y0} - ${qp.toFixed(4)}\\right)e^{${P}\\cdot ${x0}} = ${C.toFixed(4)}\\]` +
-                        `\\[\\text{Particular Solution: } y = ${qp.toFixed(4)} + ${C.toFixed(4)}e^{-${P}x}\\]`;
-                } else {
-                    particularEl.innerHTML = '\\[\\text{No initial condition given, so } C \\text{ remains arbitrary.}\\]';
-                }
+            if (hasX0 && hasY0 && hasXEval) {
+                const integralValue = numericalIntegral((t) => Math.exp(A(t)) * f(t), x0, xEval, 1200);
+                const yAtX = Math.exp(-A(xEval)) * (y0 * Math.exp(A(x0)) + integralValue);
+                numericEl.innerHTML = `\\[\\text{Numerical value: } y(${xEval}) \\approx ${yAtX.toFixed(6)}\\]`;
+            } else if (hasXEval) {
+                numericEl.innerHTML = '\\[\\text{To compute a numeric } y(x), please provide both } x_0 \\text{ and } y_0.\\]';
+            } else {
+                numericEl.innerHTML = '';
             }
 
             stepsEl.innerHTML = steps.map(step => `<div class="math-display mt-2">${step}</div>`).join('');
@@ -456,6 +481,18 @@ const AppState = {
                     console.log('First-order LDE MathJax rendered');
                 });
             }
+        }
+
+        function numericalIntegral(func, start, end, intervals = 800) {
+            if (start === end) return 0;
+            const n = intervals % 2 === 0 ? intervals : intervals + 1;
+            const h = (end - start) / n;
+            let sum = func(start) + func(end);
+            for (let i = 1; i < n; i++) {
+                const x = start + i * h;
+                sum += (i % 2 === 0 ? 2 : 4) * func(x);
+            }
+            return (h / 3) * sum;
         }
         
         // Load application state from localStorage
