@@ -62,9 +62,6 @@
                 <a href="#applications" class="nav-link" data-page="applications">Applications</a>
             </li>
             <li class="nav-item">
-                <a href="#solver" class="nav-link" data-page="solver">Solver</a>
-            </li>
-            <li class="nav-item">
                 <a href="#about" class="nav-link" data-page="about">About</a>
             </li>
             <li class="nav-item">
@@ -980,59 +977,6 @@
             </div>
         </div>
 
-        <div class="page hidden" id="solver-page">
-            <div class="page-header">
-                <h1 class="page-title">General First-Order LDE Solver</h1>
-                <p class="page-subtitle">Solve \( \frac{dy}{dx} + (ax+b)y = f(x) \) using integrating factor</p>
-            </div>
-
-            <div class="card">
-                <h2 class="card-title">Step-by-Step Linear Differential Calculator</h2>
-                <div class="study-card">
-                    <h3 class="study-card-title">Input Equation Data</h3>
-                    <p>Use `x` as variable in \( f(x) \), for example: `x^2 + 2*x + 1`, `sin(x)`, `exp(2*x)`.</p>
-
-                    <div class="input-group mt-4">
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
-                            <div>
-                                <label for="ldeA" class="form-label">\( a \)</label>
-                                <input type="number" id="ldeA" class="form-input" step="0.1" value="1">
-                            </div>
-                            <div>
-                                <label for="ldeB" class="form-label">\( b \)</label>
-                                <input type="number" id="ldeB" class="form-input" step="0.1" value="0">
-                            </div>
-                            <div>
-                                <label for="ldeF" class="form-label">\( f(x) \)</label>
-                                <input type="text" id="ldeF" class="form-input" value="x">
-                            </div>
-                            <div>
-                                <label for="ldeX0" class="form-label">\( x_0 \) (optional)</label>
-                                <input type="number" id="ldeX0" class="form-input" step="0.1" placeholder="e.g. 0">
-                            </div>
-                            <div>
-                                <label for="ldeY0" class="form-label">\( y_0 \) (optional)</label>
-                                <input type="number" id="ldeY0" class="form-input" step="0.1" placeholder="e.g. 1">
-                            </div>
-                            <div>
-                                <label for="ldeXEval" class="form-label">Evaluate at \( x \) (optional)</label>
-                                <input type="number" id="ldeXEval" class="form-input" step="0.1" placeholder="e.g. 1">
-                            </div>
-                        </div>
-                        <button class="submit-btn" id="calculateLDE" style="margin-top: 1rem;">Solve with Steps</button>
-                    </div>
-
-                    <div class="result-container mt-4" id="ldeResult" style="display: none;">
-                        <h4 class="mb-2" style="color: var(--green);">Step-by-Step Solution:</h4>
-                        <div id="ldeSteps"></div>
-                        <div class="math-display mt-2" id="ldeGeneralSolution"></div>
-                        <div class="math-display mt-2" id="ldeParticularSolution"></div>
-                        <div class="math-display mt-2" id="ldeNumericValue"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
         <!-- About Page -->
             <!-- NEW: Project Developers Section -->
         <div class="page hidden" id="about-page">
