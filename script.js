@@ -223,6 +223,7 @@ const AppState = {
             if (calculateMSDBtn) {
                 calculateMSDBtn.addEventListener('click', calculateMassSpringDamper);
             }
+
         }
         
         // RLC Circuit Calculation Function
@@ -375,7 +376,7 @@ const AppState = {
                 });
             }
         }
-        
+
         // Load application state from localStorage
         function loadState() {
             const savedScore = localStorage.getItem('lde_quiz_score');
@@ -639,7 +640,7 @@ const AppState = {
                 document.getElementById('nextBtn').textContent = 'View Results';
             }
             
-            // Trigger MathJax to render equations - FIXED
+            // Trigger MathJax to render equations
             if (window.MathJax && window.MathJax.typesetPromise) {
                 MathJax.typesetPromise().then(() => {
                     console.log('MathJax rendered quiz question');
@@ -669,7 +670,7 @@ const AppState = {
                 document.getElementById('nextBtn').textContent = 'View Results';
             }
 
-            // Re-render MathJax to ensure explanation equations are displayed - ADDED
+            // Re-render MathJax to ensure explanation equations are displayed
             if (window.MathJax && window.MathJax.typesetPromise) {
                 MathJax.typesetPromise();
             }
@@ -784,7 +785,7 @@ const AppState = {
             // Generate learning path
             generateLearningPath();
 
-            // Re-render MathJax for results page - ADDED
+            // Re-render MathJax for results page 
             if (window.MathJax && window.MathJax.typesetPromise) {
                 MathJax.typesetPromise();
             }

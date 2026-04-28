@@ -62,7 +62,6 @@
             background-color: #2d3748;
         }
         
-        /* New styles for Project Developers grid */
         .developers-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -191,7 +190,7 @@
             transition: background-color 0.3s, color 0.3s;
         }
         
-        /* Top Header - UPDATED FOR PCCOE */
+        /* Top Header*/
         .top-header {
             position: fixed;
             top: 0;
@@ -503,7 +502,6 @@
             display: block;
         }
 
-        /* Add this to your existing CSS */
         .input-group {
             background-color: var(--gray-100);
             padding: 1.5rem;
