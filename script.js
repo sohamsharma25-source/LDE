@@ -209,22 +209,83 @@ const AppState = {
                 });
             }
         }
-
-        // Interactive Calculators for Applications Page
-        function setupInteractiveCalculators() {
-            // RLC Circuit Calculator
-            const calculateRLCBtn = document.getElementById('calculateRLC');
-            if (calculateRLCBtn) {
-                calculateRLCBtn.addEventListener('click', calculateRLCCircuit);
-            }
-            
-            // Mass-Spring-Damper Calculator
-            const calculateMSDBtn = document.getElementById('calculateMSD');
-            if (calculateMSDBtn) {
-                calculateMSDBtn.addEventListener('click', calculateMassSpringDamper);
-            }
-
+        
+        // Real-time equation preview for RLC circuit
+function updateRLCEquationPreview() {
+    const R = parseFloat(document.getElementById('resistance').value);
+    const L = parseFloat(document.getElementById('inductance').value);
+    const C = parseFloat(document.getElementById('capacitance').value);
+    
+    if (isNaN(R) || isNaN(L) || isNaN(C) || L <= 0 || C <= 0) return;
+    
+    const invC = 1 / C;
+    // Format numbers nicely
+    const R_str = Number.isInteger(R) ? R : R.toFixed(3);
+    const L_str = Number.isInteger(L) ? L : L.toFixed(3);
+    const invC_str = Number.isInteger(invC) ? invC : invC.toFixed(3);
+    
+    const equation = `\\[ ${L_str} \\frac{d^2i}{dt^2} + ${R_str} \\frac{di}{dt} + ${invC_str} i = \\frac{dV}{dt} \\]`;
+    const previewDiv = document.getElementById('rlcEquationPreview');
+    if (previewDiv) {
+        previewDiv.innerHTML = equation;
+        if (window.MathJax && window.MathJax.typesetPromise) {
+            MathJax.typesetPromise([previewDiv]);
         }
+    }
+}
+
+// Real-time equation preview for Mass-Spring-Damper
+function updateMSDEquationPreview() {
+    const m = parseFloat(document.getElementById('mass').value);
+    const c = parseFloat(document.getElementById('damping').value);
+    const k = parseFloat(document.getElementById('springConstant').value);
+    
+    if (isNaN(m) || isNaN(c) || isNaN(k) || m <= 0 || k <= 0) return;
+    
+    const m_str = Number.isInteger(m) ? m : m.toFixed(3);
+    const c_str = Number.isInteger(c) ? c : c.toFixed(3);
+    const k_str = Number.isInteger(k) ? k : k.toFixed(3);
+    
+    const equation = `\\[ ${m_str} \\frac{d^2x}{dt^2} + ${c_str} \\frac{dx}{dt} + ${k_str} x = F(t) \\]`;
+    const previewDiv = document.getElementById('msdEquationPreview');
+    if (previewDiv) {
+        previewDiv.innerHTML = equation;
+        if (window.MathJax && window.MathJax.typesetPromise) {
+            MathJax.typesetPromise([previewDiv]);
+        }
+    }
+}
+
+        function setupInteractiveCalculators() {
+    // RLC Circuit Calculator
+    const calculateRLCBtn = document.getElementById('calculateRLC');
+    if (calculateRLCBtn) {
+        calculateRLCBtn.addEventListener('click', calculateRLCCircuit);
+    }
+    
+    // Mass-Spring-Damper Calculator
+    const calculateMSDBtn = document.getElementById('calculateMSD');
+    if (calculateMSDBtn) {
+        calculateMSDBtn.addEventListener('click', calculateMassSpringDamper);
+    }
+    
+    // --- NEW: Real-time equation previews ---
+    const rlcInputs = ['resistance', 'inductance', 'capacitance'];
+    rlcInputs.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener('input', updateRLCEquationPreview);
+    });
+    
+    const msdInputs = ['mass', 'damping', 'springConstant'];
+    msdInputs.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener('input', updateMSDEquationPreview);
+    });
+    
+    // Call once to set initial preview
+    updateRLCEquationPreview();
+    updateMSDEquationPreview();
+}
         
         // RLC Circuit Calculation Function
         function calculateRLCCircuit() {
